@@ -1,5 +1,11 @@
 <?php
 
+add_action("pre_user_query", function ($query) {
+  if ("rand" == $query->query_vars["orderby"]) {
+    $query->query_orderby = str_replace("user_login", "RAND()", $query->query_orderby);
+  }
+});
+
 function get_companies()
 {
   $max_company = 6;
@@ -19,7 +25,7 @@ function get_companies_by_rules()
 {
   $meta_query = get_companies_by_rules_meta_query();
 
-  $sub_admin_query = new WP_User_Query(['role'  =>  'sub-admin',    'meta_query'  =>  $meta_query]);
+  $sub_admin_query = new WP_User_Query(['role'  =>  'sub-admin',  'orderby' =>  'rand', 'number' => 6,  'meta_query'  =>  $meta_query]);
   $users = $sub_admin_query->get_results();
 
   $companies = [];
@@ -35,11 +41,6 @@ function get_companies_by_random_exclude_companies($companies, $limit)
     return $company['id'];
   }, $companies);
 
-  add_action("pre_user_query", function ($query) {
-    if ("rand" == $query->query_vars["orderby"]) {
-      $query->query_orderby = str_replace("user_login", "RAND()", $query->query_orderby);
-    }
-  });
   $sub_admin_query = new WP_User_Query(['role'  =>  'sub-admin', 'exclude' => $excludes,  'orderby' =>  'rand', 'number' =>  $limit]);
   $users = $sub_admin_query->get_results();
 

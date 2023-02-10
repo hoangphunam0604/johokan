@@ -222,7 +222,7 @@ function custom_filter_sub_admin_role($user)
           </td>
         </tr>
         <tr>
-          <th>会社名</th>
+          <th>説明文</th>
           <td>
             <textarea class="regular-text " rows="4" id="company-description" name="company_description"><?php echo get_the_author_meta("company_description", $user->ID); ?></textarea>
           </td>
