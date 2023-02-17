@@ -3,7 +3,7 @@ add_action('admin_menu', 'statistic_admin_menu');
 
 function statistic_admin_menu()
 {
-  add_submenu_page("edit.php?post_type=entry", __('統計', "luxeritas"), __('統計', "luxeritas"), 'edit_entry', 'entry-form-statistic', 'statistic_entry_form_admin_page');
+  add_submenu_page("edit.php?post_type=entry", '統計', '統計', 'edit_entry', 'entry-form-statistic', 'statistic_entry_form_admin_page');
 }
 
 function my_admin_enqueue($hook_suffix)

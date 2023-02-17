@@ -47,71 +47,52 @@
   height: 16px;
   border-radius: 50%;
   background: #44cae8;
-  -webkit-animation: lds-grid 1.2s linear infinite;
-          animation: lds-grid 1.2s linear infinite;
+  animation: lds-grid 1.2s linear infinite;
 }
 .chart-wrap .lds-grid div:nth-child(1) {
   top: 8px;
   left: 8px;
-  -webkit-animation-delay: 0s;
-          animation-delay: 0s;
+  animation-delay: 0s;
 }
 .chart-wrap .lds-grid div:nth-child(2) {
   top: 8px;
   left: 32px;
-  -webkit-animation-delay: -0.4s;
-          animation-delay: -0.4s;
+  animation-delay: -0.4s;
 }
 .chart-wrap .lds-grid div:nth-child(3) {
   top: 8px;
   left: 56px;
-  -webkit-animation-delay: -0.8s;
-          animation-delay: -0.8s;
+  animation-delay: -0.8s;
 }
 .chart-wrap .lds-grid div:nth-child(4) {
   top: 32px;
   left: 8px;
-  -webkit-animation-delay: -0.4s;
-          animation-delay: -0.4s;
+  animation-delay: -0.4s;
 }
 .chart-wrap .lds-grid div:nth-child(5) {
   top: 32px;
   left: 32px;
-  -webkit-animation-delay: -0.8s;
-          animation-delay: -0.8s;
+  animation-delay: -0.8s;
 }
 .chart-wrap .lds-grid div:nth-child(6) {
   top: 32px;
   left: 56px;
-  -webkit-animation-delay: -1.2s;
-          animation-delay: -1.2s;
+  animation-delay: -1.2s;
 }
 .chart-wrap .lds-grid div:nth-child(7) {
   top: 56px;
   left: 8px;
-  -webkit-animation-delay: -0.8s;
-          animation-delay: -0.8s;
+  animation-delay: -0.8s;
 }
 .chart-wrap .lds-grid div:nth-child(8) {
   top: 56px;
   left: 32px;
-  -webkit-animation-delay: -1.2s;
-          animation-delay: -1.2s;
+  animation-delay: -1.2s;
 }
 .chart-wrap .lds-grid div:nth-child(9) {
   top: 56px;
   left: 56px;
-  -webkit-animation-delay: -1.6s;
-          animation-delay: -1.6s;
-}
-
-@-webkit-keyframes lds-grid {
-  0%, 100% {
-    opacity: 1;
-  }
-  50% {
-    opacity: 0.5;
-  }
+  animation-delay: -1.6s;
 }
 
 @keyframes lds-grid {
@@ -123,7 +104,7 @@
   }
 }
 #titlediv input[name=post_title]#title:disabled {
-  color: black;
+  color: rgb(0, 0, 0);
   background: none;
   border: none;
   box-shadow: none;

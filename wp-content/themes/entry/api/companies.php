@@ -8,20 +8,26 @@ add_action("pre_user_query", function ($query) {
 
 function get_companies()
 {
-  $max_company = 6;
-  $companies = get_companies_by_rules();
-
-  if (count($companies) < $max_company) {
-    $limit = $max_company - count($companies);
-    $random_companies = get_companies_by_random_exclude_companies($companies, $limit);
-    $companies = array_merge($companies, $random_companies);
-  }
+  $priority_companies = get_priority_companies_by_rules();
+  $random_companies = get_radom_companies_by_rules();
+  $companies = array_merge($priority_companies, $random_companies);
   header('Content-Type: application/json; charset=utf-8');
   echo json_encode(['companies'  =>  $companies]);
   exit;
 }
+function get_priority_companies_by_rules()
+{
+  $meta_query = get_companies_by_rules_meta_query(true);
+  $sub_admin_query = new WP_User_Query(['role'  =>  'sub-admin',  'orderby' =>  'rand',  'number' => -1,  'meta_query'  =>  $meta_query]);
+  $users = $sub_admin_query->get_results();
 
-function get_companies_by_rules()
+  $companies = [];
+  foreach ($users as $user) :
+    $companies[]    =  get_company($user->ID);
+  endforeach;
+  return $companies;
+}
+function get_radom_companies_by_rules()
 {
   $meta_query = get_companies_by_rules_meta_query();
 
@@ -63,7 +69,7 @@ function get_company($user_ID)
   ];
 }
 
-function get_companies_by_rules_meta_query()
+function get_companies_by_rules_meta_query($priority = 0)
 {
 
   $business_type = sanitize_text_field($_POST['business_type']);
@@ -72,7 +78,12 @@ function get_companies_by_rules_meta_query()
   $experience = sanitize_text_field($_POST['experience']);
   $receivable_amount = sanitize_text_field($_POST['receivable_amount']);
   $receivable_notify = sanitize_text_field($_POST['receivable_notify']);
+
   $meta_query = [
+    [
+      "key" =>  "company_priority",
+      "value" =>  $priority
+    ],
     [
       "key" =>  "business_type",
       "value" =>  $business_type

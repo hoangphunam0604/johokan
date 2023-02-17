@@ -1,6 +1,4 @@
 <?php
-require_once __DIR__ . "/company.php";
-require_once __DIR__ . "/entry.php";
 
 add_action('init', 'johokan_entry_router');
 

@@ -1,4 +1,4 @@
-<? exit(); ?>
+<?php global $locations; ?>
 <!DOCTYPE html>
 <html lang="en">
 

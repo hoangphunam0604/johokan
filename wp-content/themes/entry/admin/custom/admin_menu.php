@@ -1,13 +1,4 @@
 <?php
-/*
-Plugin Name: Entry Manager
-Author: Hoàng Phú Nam
-Author URI: https://fb.me/hoangphunam/
-*/
-require_once(__DIR__ . '/setting.php');
-require_once(__DIR__ . '/entry_post_type/init.php');
-require_once(__DIR__ . '/page-option.php');
-require_once(__DIR__ . '/user/init.php');
 
 add_action('admin_menu', 'custom_admin_menu');
 function custom_admin_menu()
