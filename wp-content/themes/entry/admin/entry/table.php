@@ -18,12 +18,16 @@ function custom_entrys_where($where)
     );
   else :
 
-    global $entry_form_fields;
     $filter_querys = [];
-
-    foreach ($entry_form_fields as $key => $field) :
-      if (isset($_GET[$key]) && $_GET[$key]) :
-        $filter_querys[] = $wpdb->prepare(" $wpdb->posts.post_content  LIKE '%\"%1s\":\"%2s\"%' ", $key, $_GET[$key]);
+    $search_fields = [
+      'business_type',
+      'location',
+      'business_form',
+      'experience',
+    ];
+    foreach ($search_fields as $field) :
+      if (isset($_GET[$field]) && $_GET[$field]) :
+        $filter_querys[] = $wpdb->prepare(" $wpdb->posts.post_content  LIKE '%\"%1s\":\"%2s\"%' ", $field, $_GET[$field]);
       endif;
     endforeach;
     if (!empty($filter_querys)) {
