@@ -305,7 +305,7 @@ function custom_filter_sub_admin_role($user)
 
 function get_selected($option, $value)
 {
-  echo $option === $value ? "selected" : "";
+  echo $option == $value ? "selected" : "";
 }
 
 function disabled_with_sub_admin()

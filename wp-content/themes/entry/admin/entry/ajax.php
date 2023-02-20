@@ -21,11 +21,13 @@ function get_statistics_by_year()
     $query_data_in_year = $wpdb->prepare(
       "SELECT  MONTH(post_date) as month, COUNT(*) as total
         FROM $wpdb->posts 
+        INNER JOIN $wpdb->postmeta ON ($wpdb->postmeta.post_id = $wpdb->posts.ID) 
         WHERE  
             $wpdb->posts.post_status = 'publish'
             AND $wpdb->posts.post_type = %s 
             AND YEAR($wpdb->posts.post_date) = %d
-            AND $wpdb->posts.post_content_filtered  LIKE '%\"%d\"%'
+            AND $wpdb->postmeta.meta_key ='companies'
+            AND $wpdb->postmeta.meta_value LIKE '%\"%d\"%'
         GROUP BY month ASC ORDER BY post_date ASC",
       'entry',
       $year,
@@ -64,55 +66,6 @@ function get_statistics_by_year()
   $title = "{$year}年の月";
   response_statistics($labels, $title, $data, $total);
 }
-function get_statistics_by_month()
-{
-  global $wpdb;
-  check_user_statistics();
-  $month =  get_statistics_query('month');
-  $user_id =  get_user_id();
-  $first_day_of_this_month = (new DateTime($month))->modify('first day of this month');
-  $last_day_of_this_month = (new DateTime($month))->modify('last day of this month');
-  if ($user_id) :
-    $query_string = "SELECT DAYOFMONTH(post_date) as date_of_month,COUNT(*) as total
-    FROM $wpdb->posts 
-    WHERE  
-        $wpdb->posts.post_status = 'publish'
-        AND $wpdb->posts.post_type = %s
-        AND $wpdb->posts.post_content_filtered  LIKE '%\"%d\"%'
-        AND $wpdb->posts.post_date >= %s
-        AND $wpdb->posts.post_date <= %s
-    GROUP BY date_of_month 
-    ORDER BY date_of_month ASC";
-    $query_prepare = $wpdb->prepare($query_string, 'entry', $user_id, $first_day_of_this_month->format('Y-m-d 00:00:00'),    $last_day_of_this_month->format('Y-m-d 23:59:59'));
-
-  else :
-    $query_string = "SELECT DAYOFMONTH(post_date) as date_of_month, COUNT(*) as total
-    FROM $wpdb->posts 
-    WHERE  
-        $wpdb->posts.post_status = 'publish'
-        AND $wpdb->posts.post_type = %s
-        AND $wpdb->posts.post_date >= %s
-        AND $wpdb->posts.post_date <= %s
-    GROUP BY date_of_month 
-    ORDER BY date_of_month ASC";
-    $query_prepare = $wpdb->prepare($query_string, 'entry',  $first_day_of_this_month->format('Y-m-d 00:00:00'),    $last_day_of_this_month->format('Y-m-d 23:59:59'));
-  endif; //if ($user_id) :
-  $results = $wpdb->get_results($query_prepare);
-  $total = 0;
-  $result_array = [];
-  foreach ($results as $item) {
-    $result_array[$item->date_of_month] = $item->total;
-    $total += $item->total;
-  }
-
-  $labels = listDateOfMonth($month);
-  $data = [];
-  foreach ($labels as $key => $label) {
-    $data[] = isset($result_array[$key]) ? $result_array[$key] : 0;
-  }
-  $title = "{$first_day_of_this_month->format('Y年m月')}の月";
-  response_statistics($labels, $title, $data, $total);
-}
 
 function get_statistics_by_week()
 {
@@ -133,12 +86,13 @@ function get_statistics_by_week()
   if ($user_id) :
     $query_week = "SELECT DAYOFWEEK(post_date) as date_of_week,COUNT(*) as total
     FROM $wpdb->posts 
+    INNER JOIN $wpdb->postmeta ON ($wpdb->postmeta.post_id = $wpdb->posts.ID) 
     WHERE  
         $wpdb->posts.post_status = 'publish'
         AND $wpdb->posts.post_type = %s
-        AND $wpdb->posts.post_content_filtered  LIKE '%\"%d\"%'
-        AND $wpdb->posts.post_date >= %s
-        AND $wpdb->posts.post_date <= %s
+        AND $wpdb->postmeta.meta_key ='companies'
+        AND $wpdb->postmeta.meta_value LIKE '%\"%d\"%'
+        AND $wpdb->posts.post_date BETWEEN %s AND %s
     GROUP BY date_of_week 
     ORDER BY date_of_week ASC";
     $current_week_query = $wpdb->prepare($query_week, 'entry', $user_id, $current_week_start->format('Y-m-d 00:00:00'),    $current_week_end->format('Y-m-d 23:59:59'));
@@ -150,8 +104,7 @@ function get_statistics_by_week()
     WHERE  
         $wpdb->posts.post_status = 'publish'
         AND $wpdb->posts.post_type = %s
-        AND $wpdb->posts.post_date >= %s
-        AND $wpdb->posts.post_date <= %s
+        AND $wpdb->posts.post_date BETWEEN %s AND %s
     GROUP BY date_of_week 
     ORDER BY date_of_week ASC";
 
@@ -185,8 +138,8 @@ function get_statistics_by_week()
   $current_week_data = [];
   $last_week_data = [];
   foreach ($labels as $key => $label) :
-    $current_week_data[] = isset($current_week_result_array[$key]) ? $current_week_result_array[$key] : 0;
-    $last_week_data[] = isset($last_week_result_array[$key]) ? $last_week_result_array[$key] : 0;
+    $current_week_data[] = isset($current_week_result_array[$key + 1]) ? $current_week_result_array[$key + 1] : 0;
+    $last_week_data[] = isset($last_week_result_array[$key + 1]) ? $last_week_result_array[$key + 1] : 0;
   endforeach;
 
   $current_week_total_format = number_format($current_week_total);
@@ -217,6 +170,57 @@ function get_statistics_by_week()
   ];
 
   exit(json_encode($response));
+}
+
+
+function get_statistics_by_month()
+{
+  global $wpdb;
+  check_user_statistics();
+  $month =  get_statistics_query('month');
+  $user_id =  get_user_id();
+  $first_day_of_this_month = (new DateTime($month))->modify('first day of this month');
+  $last_day_of_this_month = (new DateTime($month))->modify('last day of this month');
+  if ($user_id) :
+    $query_string = "SELECT DAYOFMONTH(post_date) as date_of_month,COUNT(*) as total
+    FROM $wpdb->posts 
+    INNER JOIN $wpdb->postmeta ON ($wpdb->postmeta.post_id = $wpdb->posts.ID) 
+    WHERE  
+        $wpdb->posts.post_status = 'publish'
+        AND $wpdb->posts.post_type = %s
+        AND $wpdb->postmeta.meta_key ='companies'
+        AND $wpdb->postmeta.meta_value LIKE '%\"%d\"%'
+        AND $wpdb->posts.post_date BETWEEN %s AND %s
+    GROUP BY date_of_month 
+    ORDER BY date_of_month ASC";
+    $query_prepare = $wpdb->prepare($query_string, 'entry', $user_id, $first_day_of_this_month->format('Y-m-d 00:00:00'),    $last_day_of_this_month->format('Y-m-d 23:59:59'));
+
+  else :
+    $query_string = "SELECT DAYOFMONTH(post_date) as date_of_month, COUNT(*) as total
+    FROM $wpdb->posts 
+    WHERE  
+        $wpdb->posts.post_status = 'publish'
+        AND $wpdb->posts.post_type = %s
+        AND $wpdb->posts.post_date BETWEEN %s AND %s
+    GROUP BY date_of_month 
+    ORDER BY date_of_month ASC";
+    $query_prepare = $wpdb->prepare($query_string, 'entry',  $first_day_of_this_month->format('Y-m-d 00:00:00'),    $last_day_of_this_month->format('Y-m-d 23:59:59'));
+  endif; //if ($user_id) :
+  $results = $wpdb->get_results($query_prepare);
+  $total = 0;
+  $result_array = [];
+  foreach ($results as $item) {
+    $result_array[$item->date_of_month] = $item->total;
+    $total += $item->total;
+  }
+
+  $labels = listDateOfMonth($month);
+  $data = [];
+  foreach ($labels as $key => $label) {
+    $data[] = isset($result_array[$key + 1]) ? $result_array[$key + 1] : 0;
+  }
+  $title = "{$first_day_of_this_month->format('Y年m月')}の月";
+  response_statistics($labels, $title, $data, $total);
 }
 
 function response_statistics($labels, $title, $data, $total)
