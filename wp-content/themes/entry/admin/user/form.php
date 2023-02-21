@@ -73,6 +73,13 @@ function custom_filter_sub_admin_role($user)
 
   ?>
     <style type="text/css">
+      #your-profile > *:nth-child(11),
+      #your-profile *:nth-child(12){
+        display: none;
+      }
+      .application-passwords{
+        display: none;
+      }
       #company-logo-preview img {
         max-width: 200px;
         max-height: 200px;

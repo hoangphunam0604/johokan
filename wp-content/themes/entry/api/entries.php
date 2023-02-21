@@ -35,9 +35,9 @@ function save_register_entry_form()
 
   if (!empty($user_query)) {
     foreach ($user_query as $user) {
-      $user_meta = get_user_meta($user->ID);
-      if (!empty($user_meta)) {
-        $sub_emails[]   = $user_meta['email'][0];
+      $email = get_the_author_meta('email', $user->ID);
+      if ($email) {
+        $sub_emails[]   = $email;
       }
     }
   }
