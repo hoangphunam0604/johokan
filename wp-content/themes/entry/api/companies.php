@@ -8,38 +8,109 @@ add_action("pre_user_query", function ($query) {
 
 function get_companies()
 {
-  $priority_companies = get_priority_companies_by_rules();
-  $random_companies = get_radom_companies_by_rules();
+  $priority_companies = get_companies_by_rules(1);
+  $random_companies = get_companies_by_rules(0);
   header('Content-Type: application/json; charset=utf-8');
   echo json_encode(['priority'  =>  $priority_companies, 'other' =>  $random_companies]);
   exit;
 }
-function get_priority_companies_by_rules()
+function get_companies_by_rules($priority)
 {
-  $meta_query = get_companies_by_rules_meta_query(true);
-  $sub_admin_query = new WP_User_Query(['role'  =>  'sub-admin',  'orderby' =>  'rand',  'number' => -1,  'meta_query'  =>  $meta_query]);
+  $sub_admin_query = new WP_User_Query([
+    'role'  =>  'sub-admin',
+    'orderby' =>  'rand',
+    'number' => -1,
+    'meta_query'  =>  [
+      [
+        "key" =>  "company_priority",
+        "value" =>  $priority
+      ]
+    ]
+  ]);
   $users = $sub_admin_query->get_results();
-
+  $companies = getCompaniesPassAnyRule($users);
+  return $companies;
+}
+function getCompaniesPassAnyRule($users)
+{
   $companies = [];
   foreach ($users as $user) :
-    $companies[]    =  get_company($user->ID);
+    $user_id = $user->ID;
+    $company_business_name =  get_the_author_meta('company_business_name', $user_id);
+    if (checkRules($user_id)) {
+      $companies[]    =  get_company($user_id);
+    }
   endforeach;
   return $companies;
 }
-function get_radom_companies_by_rules()
+function checkRules($user_id)
 {
-  $meta_query = get_companies_by_rules_meta_query();
+  $rules = get_the_author_meta('rules', $user_id);
 
-  $sub_admin_query = new WP_User_Query(['role'  =>  'sub-admin',  'orderby' =>  'rand', 'number' => 6,  'meta_query'  =>  $meta_query]);
-  $users = $sub_admin_query->get_results();
+  if (!is_array($rules) || empty($rules)) return false;
+  foreach ($rules as $rule) {
+    if (checkRule($rule)) return true;
+  }
+  return false;
+}
+function checkRule($rule)
+{
+  $business_type = sanitize_text_field($_POST['business_type']);
+  $location = sanitize_text_field($_POST['location']);
+  $business_form = sanitize_text_field($_POST['business_form']);
+  $experience = sanitize_text_field($_POST['experience']);
+  $receivable_amount = sanitize_text_field($_POST['receivable_amount']);
+  $receivable_notify = sanitize_text_field($_POST['receivable_notify']);
+  /* echo $business_type . "==" . $rule['business_type'] . "&&\n" .
+    (implode(",", $rule['location']) . "==" . '全県' || in_array($location, $rule['location'])) . "&&\n" .
+    $business_form . "==" . $rule['business_form'] . "&&\n" .
+    $experience . "==" . $rule['experience'] . "&&\n" .
+    $receivable_amount . ">=" . $rule['receivable_amount_from']    . "&&\n" .
+    $receivable_amount  . "<=" . $rule['receivable_amount_to']  . "&&\n" .
+    $receivable_notify . "==" . $rule['receivable_notify'];
+  echo "\n";
+  var_dump($business_type == $rule['business_type']);
+  echo "\n";
+  var_dump((in_array($rule['location'], ['全県'])  || in_array($location, $rule['location'])));
+  echo "==== LOCATION  ==\n";
+  var_dump($rule['location']);
+  var_dump(in_array("全県", $rule['location']));
+  var_dump(in_array($location, $rule['location']));
+  echo "==== LOCATION  ==\n";
 
-  $companies = [];
-  foreach ($users as $user) :
-    $companies[]    =  get_company($user->ID);
-  endforeach;
-  return $companies;
+  echo "\n";
+  var_dump($business_form == $rule['business_form']);
+  echo "\n";
+  var_dump($experience == $rule['experience']);
+  echo "\n";
+  var_dump($receivable_amount >= $rule['receivable_amount_from']);
+  echo "\n";
+  var_dump($receivable_amount  <= $rule['receivable_amount_to']);
+  echo "\n";
+  var_dump($receivable_notify == $rule['receivable_notify']);
+  echo "\n";
+  echo "==== TOTAL ==\n"; */
+  return
+    $business_type == $rule['business_type'] &&
+    (in_array('全県', $rule['location'])  || in_array($location, $rule['location'])) &&
+    $business_form == $rule['business_form'] &&
+    $experience == $rule['experience'] &&
+    $receivable_amount >= $rule['receivable_amount_from']    &&
+    $receivable_amount  <= $rule['receivable_amount_to']  &&
+    $receivable_notify == $rule['receivable_notify'];
 }
 
+function get_company($user_ID)
+{
+  $src =  get_the_author_meta('company_logo', $user_ID) ?: get_stylesheet_directory_uri() . '/assets/img/default-logo.png';
+  return [
+    'id'  => (int)$user_ID,
+    'logo'  => $src,
+    'name'  => get_the_author_meta('company_business_name', $user_ID),
+    'description'  => nl2br(get_the_author_meta('company_description', $user_ID))
+  ];
+}
+/* 
 function get_companies_by_random_exclude_companies($companies, $limit)
 {
   $excludes = array_map(function ($company) {
@@ -54,18 +125,6 @@ function get_companies_by_random_exclude_companies($companies, $limit)
     $companies[]    =  get_company($user->ID);
   endforeach;
   return $companies;
-}
-
-
-function get_company($user_ID)
-{
-  $src =  get_the_author_meta('company_logo', $user_ID) ?: get_stylesheet_directory_uri() . '/assets/img/default-logo.png';
-  return [
-    'id'  => (int)$user_ID,
-    'logo'  => $src,
-    'name'  => get_the_author_meta('company_business_name', $user_ID),
-    'description'  => nl2br(get_the_author_meta('company_description', $user_ID))
-  ];
 }
 
 function get_companies_by_rules_meta_query($priority = 0)
@@ -126,3 +185,4 @@ function get_companies_by_rules_meta_query($priority = 0)
   ];
   return $meta_query;
 }
+ */
