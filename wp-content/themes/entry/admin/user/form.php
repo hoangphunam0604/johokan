@@ -59,7 +59,7 @@ function custom_filter_sub_admin_role($user)
         $("input, select, textarea").prop("disabled", true);
         $("#_wpnonce").remove();
         $("p.submit").remove();
-      });
+      })
     </script>
   <?php
   }
@@ -73,13 +73,15 @@ function custom_filter_sub_admin_role($user)
 
   ?>
     <style type="text/css">
-      #your-profile > *:nth-child(11),
-      #your-profile *:nth-child(12){
+      #your-profile>*:nth-child(11),
+      #your-profile *:nth-child(12) {
         display: none;
       }
-      .application-passwords{
+
+      .application-passwords {
         display: none;
       }
+
       #company-logo-preview img {
         max-width: 200px;
         max-height: 200px;
@@ -89,11 +91,11 @@ function custom_filter_sub_admin_role($user)
         width: 200px;
       }
 
-      #list_location {
+      .list_location {
         display: none;
       }
 
-      #list_location.checked {
+      .list_location.checked {
         display: block;
       }
 
@@ -101,19 +103,19 @@ function custom_filter_sub_admin_role($user)
         width: 250px;
       }
 
-      #list_location .group-all {
+      .list_location .group-all {
         display: block;
         margin: 5px
       }
 
-      #list_location .location {
+      .list_location .location {
         height: 30px;
         width: 100px;
         float: left;
         margin-right: 20px;
       }
 
-      #list_location .location label {
+      .list_location .location label {
         margin-left: 5px;
       }
 
@@ -124,18 +126,22 @@ function custom_filter_sub_admin_role($user)
     </style>
     <script type="text/javascript">
       jQuery(function($) {
+
+
+        $("#your-profile input").on('keyup keypress', function(e) {
+          var keyCode = e.keyCode || e.which;
+          if (keyCode === 13) {
+            e.preventDefault();
+            return false;
+          }
+        });
+
         $("#role").change(function() {
           if ($(this).val() == "sub-admin") {
             $("#sub-admin-filter").show();
           } else {
             $("#sub-admin-filter").hide();
           }
-        })
-        $("input[name='radio_location']").change(function() {
-          $('#list_location').slideToggle()
-        })
-        $("#checkall").change(function() {
-          $('#list_location input:checkbox').not(this).prop('checked', this.checked);
         })
 
         $('body').on('click', '.company_logo_upload_image_button', function(e) {
@@ -152,7 +158,8 @@ function custom_filter_sub_admin_role($user)
         });
         $('#company-logo').on('change', function() {
           $('#company-logo-preview img').attr('src', $(this).val());
-        })
+        });
+
       })
     </script>
     <div id="sub-admin-filter" style="display: <?php echo $display; ?>">
@@ -205,107 +212,104 @@ function custom_filter_sub_admin_role($user)
       <h2><?php _e('副管理者情報 '); ?></h2>
       <table class="form-table">
         <tr>
-          <th>あなたの事業形態を選択</th>
+          <th>条件設定</th>
           <td>
-            <?php $business_type = get_the_author_meta('business_type', $user->ID); ?>
-            <select name="business_type" class="require background">
-              <option value="">あなたの事業形態を選択</option>
-              <option value="法人" <?php get_selected("法人", $business_type); ?>>法人</option>
-              <option value="個人事業主" <?php get_selected("個人事業主", $business_type); ?>>個人事業主</option>
-              <option value="フリーランス" <?php get_selected("フリーランス", $business_type); ?>>フリーランス</option>
-            </select>
-          </td>
-        </tr>
-        <tr>
-          <th>所在地を選択</th>
-          <td>
-            <?php
-            $location = get_the_author_meta('location', $user->ID);
-            if (!is_array($location))
-              $location = [];
-            $checkall = "checked";
-            $other_checked = "";
-            if (!empty($location) && $location[0] != "全県") :
-              $checkall = "";
-              $other_checked = "checked";
-            endif;
-            ?>
-            <label>
-              <input type="radio" name="radio_location" value="1" id="all_location" <?php echo $checkall; ?> />
-              <?php echo $empty_location; ?>
-            </label>
+            <div id="rules">
+              <?php
+              $keyRule = 0;
+              $rules = $user == "add-new-user" ? [] : get_the_author_meta('rules', $user->ID,  true);
+              if (is_array($rules)) :
+                foreach ($rules as  $rule) :
+                  getRuleTemplate($keyRule, $rule);
+                  $keyRule++;
+                endforeach;
+              endif;
+              ?>
 
-            <label>
-              <input type="radio" name="radio_location" value="0" id="another_location" <?php echo $other_checked; ?> />
-              各都道府県
-            </label>
-
-
-            <div id="list_location" class="<?php echo $other_checked; ?>" style="background-color: #ddd;min-height:200px;overflow:hidden;margin-top: 15px">
-              <div class="group-all">
-                <label><input type="checkbox" id="checkall"> すべて選択</label>
-              </div>
-              <hr />
-              <?php foreach ($locations as  $option) : ?>
-                <div class="location">
-                  <label>
-                    <input type="checkbox" name="location[]" value="<?php echo $option; ?>" <?php check_checked_array($option, $location); ?> />
-                    <?php echo $option; ?>
-                  </label>
-                </div>
-              <?php endforeach; ?>
             </div>
-          </td>
-        </tr>
-        <tr>
-          <th>売掛先の事業形態</th>
-          <td>
-            <?php $business_form = get_the_author_meta('business_form', $user->ID); ?>
-            <select name="business_form" class="require background">
-              <option value="">あなたの事業形態を選択</option>
-              <option value="法人" <?php get_selected("法人", $business_form); ?>>法人</option>
-              <option value="個人事業主" <?php get_selected("個人事業主", $business_form); ?>>個人事業主</option>
-              <option value="その他" <?php get_selected("その他", $business_form); ?>>その他</option>
-            </select>
-          </td>
-        </tr>
-        <tr>
-          <th>ファクタリングのご利用経験</th>
-          <td>
-            <?php $experience = get_the_author_meta('experience', $user->ID); ?>
-            <select name="experience" class="require background">
-              <option value="">あなたの事業形態を選択</option>
-              <option value="有り" <?php get_selected("有り", $experience); ?>>有り</option>
-              <option value="無し" <?php get_selected("無し", $experience); ?>>無し</option>
-            </select>
-          </td>
-        </tr>
-        <tr>
-          <th>売掛債権の金額</th>
-          <td>
-            <?php $receivable_amount_from = get_the_author_meta('receivable_amount_from', $user->ID); ?>
-            <?php $receivable_amount_to = get_the_author_meta('receivable_amount_to', $user->ID); ?>
-            <input class="regular-text " type="tel" id="company-business-name" name="receivable_amount_from" value="<?php echo $receivable_amount_from; ?>">万円
-            <br>-<br>
-            <input class="regular-text " type="tel" id="company-business-name" name="receivable_amount_to" value="<?php echo $receivable_amount_to; ?>">万円
-          </td>
-        </tr>
-        <tr>
-          <th>売掛先への債権譲渡通知は可能ですか？</th>
-          <td>
-            <?php $receivable_notify = get_the_author_meta('receivable_notify', $user->ID); ?>
-            <label>
-              <input type="radio" name="receivable_notify" value="可能（三社間取引）" <?php check_checked_array($receivable_notify, ["可能（三社間取引）"],); ?> />
-              可能（三社間取引）
-            </label>
-            <label>
-              <input type="radio" name="receivable_notify" value="不可（二社間取引）" <?php check_checked_array($receivable_notify, ["不可（二社間取引）"]); ?> />
-              不可（二社間取引）
-            </label>
+            <button class="button button-primary add-rule" type="button">条件追加</button>
+
           </td>
         </tr>
       </table>
     </div>
+    <script>
+      jQuery(function($) {
+        const loading = $(`<div class="lds-facebook"><div></div><div></div><div></div></div>`);
+        const rules = $("#rules");
+        let key = <?php echo $keyRule; ?>;
+        $("#rules").on('click', ".remove-rule", function() {
+          if (confirm("追加した条件設定を消去しますか？")) {
+            $(this).closest(".rule").slideUp(500, function() {
+              $(this).remove();
+            });
+          }
+        });
+
+        $("#rules").on('click', '.rule-title .label, .rule-title .text', function() {
+          const rule = $(this).closest('.rule');
+          const business_type = $(rule).find('.business_type').val();
+          const radio_location = $(rule).find('.radio_location:checked').val();
+          let location = [];
+          if (radio_location == 1) {
+            location = ["全県"];
+          } else {
+            $(rule).find('.location_input:checked').each(function(i) {
+              location[i] = $(this).val();
+            });
+          }
+          const business_form = $(rule).find('.business_form').val();
+          const experience = $(rule).find('.experience').val();
+          const receivable_amount_from = $(rule).find('.receivable_amount_from').val();
+          const receivable_amount_to = $(rule).find('.receivable_amount_to').val();
+          const receivable_notify = $(rule).find('.receivable_notify:checked').val();
+          $(rule).find('.text-business_type').text(business_type);
+          $(rule).find('.text-location').text(location);
+          $(rule).find('.text-business_form').text(business_form);
+          $(rule).find('.text-experience').text(experience);
+          $(rule).find('.text-receivable_amount_from').text(receivable_amount_from);
+          $(rule).find('.text-receivable_amount_to').text(receivable_amount_to);
+          $(rule).find('.text-receivable_notify').text(receivable_notify);
+          $(rule).closest('.rule').find(".rule-title .text").slideToggle();
+          $(rule).closest('.rule').find(".rule-content").slideToggle();
+        });
+
+        $(".add-rule").click(function() {
+          $.ajax({
+            url: '<?php echo site_url() . '/wp-admin/admin-ajax.php'; ?>',
+            data: {
+              action: 'get_new_rule_template',
+              key: key
+            },
+            type: 'POST',
+            beforeSend: function() {
+              loading.appendTo(rules);
+            },
+            success: function(ruleTemplate) {
+              rules.append(ruleTemplate)
+              key++;
+            }
+          }).always(() => {
+            loading.remove();
+          });
+        });
+
+
+        $("#rules").on('change', ".radio_location", function() {
+          const val = $(this).val();
+          const list_location = $(this).closest('td').find('.list_location');
+          if (val == "1") {
+            list_location.slideUp();
+          } else {
+            list_location.slideDown();
+          }
+        });
+
+        $("#rules").on('click', ".checkall", function() {
+          $(this).closest('td').find('.list_location input:checkbox').not(this).prop('checked', this.checked);
+        })
+      })
+    </script>
 <?php
   } else  return;
 }

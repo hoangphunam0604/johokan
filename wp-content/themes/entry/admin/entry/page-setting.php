@@ -138,7 +138,7 @@ function admin_page()
               年商を選択: [info_annual_turnover]<br>
               業種: [info_industry]<br>
               ご担当者の氏名: [info_fullname]<br>
-              ご担当者のふりがな: [info_furigana_name]<br>
+              ご担当者のフリガナ: [info_furigana_name]<br>
               Email: [info_email]<br>
               電話番号: [info_phone]<br>
               ご希望の連絡日時: [info_preferred_contact_date]<br>
@@ -187,7 +187,7 @@ function admin_page()
               年商を選択: [info_annual_turnover]<br>
               業種: [info_industry]<br>
               ご担当者の氏名: [info_fullname]<br>
-              ご担当者のふりがな: [info_furigana_name]<br>
+              ご担当者のフリガナ: [info_furigana_name]<br>
               Email: [info_email]<br>
               電話番号: [info_phone]<br>
               ご希望の連絡日時: [info_preferred_contact_date]<br>

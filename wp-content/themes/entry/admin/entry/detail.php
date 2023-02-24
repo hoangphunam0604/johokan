@@ -132,7 +132,7 @@ function entry_form_meta_box()
         <td><?php echo $info_fullname; ?></td>
       </tr>
       <tr>
-        <th>ご担当者のふりがな</th>
+        <th>ご担当者のフリガナ</th>
         <td><?php echo $info_furigana_name; ?></td>
       </tr>
       <tr>

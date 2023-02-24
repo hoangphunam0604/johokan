@@ -10,9 +10,8 @@ function get_companies()
 {
   $priority_companies = get_priority_companies_by_rules();
   $random_companies = get_radom_companies_by_rules();
-  $companies = array_merge($priority_companies, $random_companies);
   header('Content-Type: application/json; charset=utf-8');
-  echo json_encode(['companies'  =>  $companies]);
+  echo json_encode(['priority'  =>  $priority_companies, 'other' =>  $random_companies]);
   exit;
 }
 function get_priority_companies_by_rules()
