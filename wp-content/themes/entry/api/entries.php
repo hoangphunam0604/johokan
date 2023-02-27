@@ -4,12 +4,12 @@ function store_entry()
 {
   header('Content-Type: application/json; charset=utf-8');
   if (!check_valid_entry_form_data())
-    exit(json_encode(['status'  =>  0, 'msg' =>  "Missing params a"]));
-
-  if (!save_register_entry_form())
+    exit(json_encode(['status'  =>  0, 'msg' =>  "Missing params"]));
+  $new_entry = save_register_entry_form();
+  if (!$new_entry)
     exit(json_encode(['status'  =>  0, 'msg' =>  "Can not save entry"]));
 
-  exit(json_encode(['status'  =>  1]));
+  exit(json_encode(['status'  =>  1, 'entry_id'  =>  $new_entry]));
 }
 
 function save_register_entry_form()
@@ -28,7 +28,8 @@ function save_register_entry_form()
     return false;
 
   update_entry_data($new_post);
-
+  $entry_id = current_time("Ymd") . $new_post;
+  update_post_meta($new_post, 'entry_id', $entry_id);
   $sub_emails = array();
   $sub_ids = $_POST['companies'];
   $user_query = get_users(array('role' => 'sub-admin', 'include' =>  $sub_ids));
@@ -79,7 +80,7 @@ function save_register_entry_form()
       wp_mail($email, $subadmin_subject, $admin_message, $headers);
   }
 
-  return $new_post;
+  return $entry_id;
 }
 
 function update_entry_data($post_id)

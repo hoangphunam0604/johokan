@@ -123,9 +123,9 @@ function getRuleTemplate($key, $rule = [], $open = false)
         <tr>
           <th>売掛債権の金額</th>
           <td>
-            <input type="tel" class="receivable_amount_from regular-text" name="rules[<?php echo $key; ?>][receivable_amount_from]" value="<?php echo $receivable_amount_from; ?>">万円
+            <input type="tel" class="receivable_amount_from regular-text" name="rules[<?php echo $key; ?>][receivable_amount_from]" value="<?php echo $receivable_amount_from; ?>">万円（最小値）
             <br>-<br>
-            <input type="tel" class="receivable_amount_to regular-text" name="rules[<?php echo $key; ?>][receivable_amount_to]" value="<?php echo $receivable_amount_to; ?>">万円
+            <input type="tel" class="receivable_amount_to regular-text" name="rules[<?php echo $key; ?>][receivable_amount_to]" value="<?php echo $receivable_amount_to; ?>">万円（最大値）
           </td>
         </tr>
         <tr>
