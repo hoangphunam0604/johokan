@@ -248,21 +248,40 @@ function custom_filter_sub_admin_role($user)
 
         $("#rules").on('click', '.rule-title .label, .rule-title .text', function() {
           const rule = $(this).closest('.rule');
-          const business_type = $(rule).find('.business_type').val();
-          const radio_location = $(rule).find('.radio_location:checked').val();
+          let business_type = [];
           let location = [];
-          if (radio_location == 1) {
+          let business_form = [];
+          let experience = [];
+          let receivable_notify = [];
+
+
+          $(rule).find('.business_type:checked').each(function(i) {
+            business_type[i] = $(this).val();
+          });
+
+          if ($(rule).find('.radio_location:checked').val() == 1) {
             location = ["全県"];
           } else {
             $(rule).find('.location_input:checked').each(function(i) {
               location[i] = $(this).val();
             });
           }
-          const business_form = $(rule).find('.business_form').val();
-          const experience = $(rule).find('.experience').val();
+
+          $(rule).find('.business_form:checked').each(function(i) {
+            business_form[i] = $(this).val();
+          });
+
+          $(rule).find('.experience:checked').each(function(i) {
+            experience[i] = $(this).val();
+          });
+
           const receivable_amount_from = $(rule).find('.receivable_amount_from').val();
           const receivable_amount_to = $(rule).find('.receivable_amount_to').val();
-          const receivable_notify = $(rule).find('.receivable_notify:checked').val();
+
+          $(rule).find('.receivable_notify:checked').each(function(i) {
+            receivable_notify[i] = $(this).val();
+          });
+
           $(rule).find('.text-business_type').text(business_type);
           $(rule).find('.text-location').text(location);
           $(rule).find('.text-business_form').text(business_form);
@@ -326,5 +345,6 @@ function disabled_with_sub_admin()
 
 function check_checked_array($option, $array)
 {
+  if (!is_array($array)) return;
   echo in_array($option, $array) ? "checked" : "";
 }

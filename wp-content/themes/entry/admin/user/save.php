@@ -23,15 +23,20 @@ function save_custom_user_profile_fields($user_id)
       $location =  isset($rule['location']) ? $rule['location'] : [];
       if ($rule['radio_location'] == 1)
         $location =  ['全県'];
-
+      $business_type = $rule['business_type'] ?: [];
+      $business_form = $rule['business_form'] ?: [];
+      $experience = $rule['experience'] ?: [];
+      $receivable_amount_from = $rule['receivable_amount_from'] ?: [];
+      $receivable_amount_to = $rule['receivable_amount_to'] ?: [];
+      $receivable_notify = $rule['receivable_notify'] ?: [];
       $rules[] = [
-        'business_type' => $rule['business_type'],
+        'business_type' => $business_type,
         'location' => $location,
-        'business_form' => $rule['business_form'],
-        'experience'  => $rule['experience'],
-        'receivable_amount_from'  => $rule['receivable_amount_from'],
-        'receivable_amount_to'  => $rule['receivable_amount_to'],
-        'receivable_notify' => $rule['receivable_notify'],
+        'business_form' => $business_form,
+        'experience'  => $experience,
+        'receivable_amount_from'  => $receivable_amount_from,
+        'receivable_amount_to'  => $receivable_amount_to,
+        'receivable_notify' => $receivable_notify,
       ];
     endforeach;
   endif;

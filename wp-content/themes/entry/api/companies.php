@@ -61,43 +61,14 @@ function checkRule($rule)
   $experience = sanitize_text_field($_POST['experience']);
   $receivable_amount = sanitize_text_field($_POST['receivable_amount']);
   $receivable_notify = sanitize_text_field($_POST['receivable_notify']);
-  /* echo $business_type . "==" . $rule['business_type'] . "&&\n" .
-    (implode(",", $rule['location']) . "==" . '全県' || in_array($location, $rule['location'])) . "&&\n" .
-    $business_form . "==" . $rule['business_form'] . "&&\n" .
-    $experience . "==" . $rule['experience'] . "&&\n" .
-    $receivable_amount . ">=" . $rule['receivable_amount_from']    . "&&\n" .
-    $receivable_amount  . "<=" . $rule['receivable_amount_to']  . "&&\n" .
-    $receivable_notify . "==" . $rule['receivable_notify'];
-  echo "\n";
-  var_dump($business_type == $rule['business_type']);
-  echo "\n";
-  var_dump((in_array($rule['location'], ['全県'])  || in_array($location, $rule['location'])));
-  echo "==== LOCATION  ==\n";
-  var_dump($rule['location']);
-  var_dump(in_array("全県", $rule['location']));
-  var_dump(in_array($location, $rule['location']));
-  echo "==== LOCATION  ==\n";
-
-  echo "\n";
-  var_dump($business_form == $rule['business_form']);
-  echo "\n";
-  var_dump($experience == $rule['experience']);
-  echo "\n";
-  var_dump($receivable_amount >= $rule['receivable_amount_from']);
-  echo "\n";
-  var_dump($receivable_amount  <= $rule['receivable_amount_to']);
-  echo "\n";
-  var_dump($receivable_notify == $rule['receivable_notify']);
-  echo "\n";
-  echo "==== TOTAL ==\n"; */
   return
-    $business_type == $rule['business_type'] &&
+    in_array($business_type, $rule['business_type']) &&
     (in_array('全県', $rule['location'])  || in_array($location, $rule['location'])) &&
-    $business_form == $rule['business_form'] &&
-    $experience == $rule['experience'] &&
+    in_array($business_form, $rule['business_form']) &&
+    in_array($experience, $rule['experience']) &&
     $receivable_amount >= $rule['receivable_amount_from']    &&
     $receivable_amount  <= $rule['receivable_amount_to']  &&
-    $receivable_notify == $rule['receivable_notify'];
+    in_array($receivable_notify, $rule['receivable_notify']);
 }
 
 function get_company($user_ID)

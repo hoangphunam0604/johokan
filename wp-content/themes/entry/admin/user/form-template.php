@@ -47,15 +47,15 @@ function getRuleTemplate($key, $rule = [], $open = false)
     <div class="rule-title">
       <div class="label">条件設定</div>
       <div class="text">
-        <p>■あなたの事業形態を選択: <strong class="text-business_type"><?php echo $business_type; ?></strong></p>
+        <p>■あなたの事業形態を選択: <strong class="text-business_type"><?php echo implode(",", $business_type); ?></strong></p>
         <p>■所在地を選択: <strong class="text-location"><?php echo implode(",", $location); ?></strong></p>
-        <p>■売掛先の事業形態: <strong class="text-business_form"><?php echo $business_form; ?></strong></p>
-        <p>■ファクタリングのご利用経験: <strong class="text-experience"><?php echo $experience; ?></strong></p>
+        <p>■売掛先の事業形態: <strong class="text-business_form"><?php echo implode(",", $business_form); ?></strong></p>
+        <p>■ファクタリングのご利用経験: <strong class="text-experience"><?php echo implode(",", $experience); ?></strong></p>
         <p>■売掛債権の金額:
           <strong class="text-receivable_amount_from"><?php echo $receivable_amount_from; ?></strong> -
           <strong class="text-receivable_amount_to"><?php echo $receivable_amount_to; ?></strong>
         </p>
-        <p>■売掛先への債権譲渡通知は可能ですか？: <strong class="text-receivable_notify"><?php echo $receivable_notify; ?></strong></p>
+        <p>■売掛先への債権譲渡通知は可能ですか？: <strong class="text-receivable_notify"><?php echo implode(",", $receivable_notify); ?></strong></p>
       </div>
       <button type="button" class="remove-rule">消去</button>
     </div>
@@ -64,12 +64,9 @@ function getRuleTemplate($key, $rule = [], $open = false)
         <tr>
           <th>あなたの事業形態を選択</th>
           <td>
-            <select name="rules[<?php echo $key; ?>][business_type]" class="business_type">
-              <option value="">あなたの事業形態を選択</option>
-              <option value="法人" <?php get_selected("法人", $business_type); ?>>法人</option>
-              <option value="個人事業主" <?php get_selected("個人事業主", $business_type); ?>>個人事業主</option>
-              <option value="フリーランス" <?php get_selected("フリーランス", $business_type); ?>>フリーランス</option>
-            </select>
+            <label><input name="rules[<?php echo $key; ?>][business_type][]" class="business_type" type="checkbox" value="法人" <?php check_checked_array('法人', $business_type); ?>>法人</label>
+            <label><input name="rules[<?php echo $key; ?>][business_type][]" class="business_type" type="checkbox" value="個人事業主" <?php check_checked_array('個人事業主', $business_type); ?>>個人事業主</label>
+            <label><input name="rules[<?php echo $key; ?>][business_type][]" class="business_type" type="checkbox" value="フリーランス" <?php check_checked_array('フリーランス', $business_type); ?>>フリーランス</label>
           </td>
         </tr>
         <tr>
@@ -102,22 +99,16 @@ function getRuleTemplate($key, $rule = [], $open = false)
         <tr>
           <th>売掛先の事業形態</th>
           <td>
-            <select name="rules[<?php echo $key; ?>][business_form]" class="business_form">
-              <option value="">あなたの事業形態を選択</option>
-              <option value="法人" <?php get_selected("法人", $business_form); ?>>法人</option>
-              <option value="個人事業主" <?php get_selected("個人事業主", $business_form); ?>>個人事業主</option>
-              <option value="その他" <?php get_selected("その他", $business_form); ?>>その他</option>
-            </select>
+            <label><input name="rules[<?php echo $key; ?>][business_form][]" class="business_form" type="checkbox" value="法人" <?php check_checked_array('法人', $business_form); ?>>法人</label>
+            <label><input name="rules[<?php echo $key; ?>][business_form][]" class="business_form" type="checkbox" value="個人事業主" <?php check_checked_array('個人事業主', $business_form); ?>>個人事業主</label>
+            <label><input name="rules[<?php echo $key; ?>][business_form][]" class="business_form" type="checkbox" value="その他" <?php check_checked_array('その他', $business_form); ?>>その他</label>
           </td>
         </tr>
         <tr>
           <th>ファクタリングのご利用経験</th>
           <td>
-            <select name="rules[<?php echo $key; ?>][experience]" class="experience">
-              <option value="">あなたの事業形態を選択</option>
-              <option value="有り" <?php get_selected("有り", $experience); ?>>有り</option>
-              <option value="無し" <?php get_selected("無し", $experience); ?>>無し</option>
-            </select>
+            <label><input name="rules[<?php echo $key; ?>][experience][]" class="experience" type="checkbox" value="有り" <?php check_checked_array('有り', $experience); ?>>有り</label>
+            <label><input name="rules[<?php echo $key; ?>][experience][]" class="experience" type="checkbox" value="無し" <?php check_checked_array('無し', $experience); ?>>無し</label>
           </td>
         </tr>
         <tr>
@@ -132,11 +123,11 @@ function getRuleTemplate($key, $rule = [], $open = false)
           <th>売掛先への債権譲渡通知は可能ですか？</th>
           <td>
             <label>
-              <input type="radio" class="receivable_notify" name="rules[<?php echo $key; ?>][receivable_notify]" value="可能（三社間取引）" <?php check_checked_array($receivable_notify, ["可能（三社間取引）"],); ?> />
+              <input type="checkbox" class="receivable_notify" name="rules[<?php echo $key; ?>][receivable_notify][]" value="可能（三社間取引）" <?php check_checked_array("可能（三社間取引）", $receivable_notify,); ?> />
               可能（三社間取引）
             </label>
             <label>
-              <input type="radio" class="receivable_notify" name="rules[<?php echo $key; ?>][receivable_notify]" value="不可（二社間取引）" <?php check_checked_array($receivable_notify, ["不可（二社間取引）"]); ?> />
+              <input type="checkbox" class="receivable_notify" name="rules[<?php echo $key; ?>][receivable_notify][]" value="不可（二社間取引）" <?php check_checked_array("不可（二社間取引）", $receivable_notify); ?> />
               不可（二社間取引）
             </label>
           </td>
