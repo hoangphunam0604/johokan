@@ -9,6 +9,7 @@ function entry_form_meta_box()
 {
 
   global $post_ID;
+  $entry_id =  get_post_meta($post_ID, 'entry_id', true);
   $business_type =  get_post_meta($post_ID, 'business_type', true);
   $location =  get_post_meta($post_ID, 'location', true);
   $business_form =  get_post_meta($post_ID, 'business_form', true);
@@ -54,26 +55,30 @@ function entry_form_meta_box()
   <div class="entry-box <?php echo is_super_admin() ? "sub-admin" : ""; ?>">
     <table>
       <tr>
-        <th>あなたの事業形態を選択</th>
+        <th>■お客様ナンバー:</th>
+        <td><?php echo $entry_id; ?></td>
+      </tr>
+      <tr>
+        <th>■申込者の事業形態:</th>
         <td><?php echo $business_type; ?></td>
       </tr>
       <tr>
-        <th>所在地を選択</th>
+        <th>■申込者の所在地:</th>
         <td><?php echo $location; ?></td>
       </tr>
       <tr>
-        <th>売掛先の事業形態</th>
+        <th>■売掛先の事業形態:</th>
         <td><?php echo $business_form; ?></td>
       </tr>
       <tr>
-        <th>ファクタリングのご利用経験</th>
+        <th>■ファクタリングのご利用経験:</th>
         <td><?php echo $experience; ?></td>
       </tr>
     </table>
     <h2 class="entry-table-title">【売掛先の情報】</h2>
     <table>
       <tr>
-        <th>売掛債権の金額</th>
+        <th>■対応可能な売掛債権額:</th>
         <td><?php echo $receivable_amount; ?>万円</td>
       </tr>
       <tr>
@@ -85,7 +90,7 @@ function entry_form_meta_box()
         <td><?php echo $receivable_date; ?> </td>
       </tr>
       <tr>
-        <th>売掛先への債権譲渡通知は可能ですか？</th>
+        <th>■債権譲渡通知の可否:</th>
         <td><?php echo $receivable_notify; ?></td>
       </tr>
       <tr>

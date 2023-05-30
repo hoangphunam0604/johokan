@@ -1,4 +1,9 @@
-<?php global $locations; ?>
+<?php
+if (!isset($_GET['test'])) :
+  wp_redirect(admin_url('/edit.php?post_type=entry'));
+  exit;
+endif;
+global $locations; ?>
 <!DOCTYPE html>
 <html lang="en">
 
