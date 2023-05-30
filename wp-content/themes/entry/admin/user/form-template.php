@@ -57,7 +57,10 @@ function getRuleTemplate($key, $rule = [], $open = false)
         </p>
         <p>■売掛先への債権譲渡通知は可能ですか？: <strong class="text-receivable_notify"><?php echo implode(",", $receivable_notify); ?></strong></p>
       </div>
-      <button type="button" class="remove-rule">消去</button>
+
+      <?php if (current_user_can('administrator')) : ?>
+        <button type="button" class="remove-rule">消去</button>
+      <?php endif; ?>
     </div>
     <div class="rule-content">
       <table class="form-table">

@@ -227,7 +227,9 @@ function custom_filter_sub_admin_role($user)
               ?>
 
             </div>
-            <button class="button button-primary add-rule" type="button">条件追加</button>
+            <?php if (current_user_can('administrator')) : ?>
+              <button class="button button-primary add-rule" type="button">条件追加</button>
+            <?php endif; ?>
 
           </td>
         </tr>

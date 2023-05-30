@@ -56,7 +56,7 @@ function entry_form_meta_box()
     <table>
       <tr>
         <th>■お客様ナンバー:</th>
-        <td><?php echo $entry_id; ?></td>
+        <td><strong style="font-size: 1.3em;"><?php echo $entry_id; ?></strong></td>
       </tr>
       <tr>
         <th>■申込者の事業形態:</th>
@@ -82,11 +82,11 @@ function entry_form_meta_box()
         <td><?php echo $receivable_amount; ?>万円</td>
       </tr>
       <tr>
-        <th>ご希望の買取金額</th>
+        <th>■ご希望の買取金額:</th>
         <td><?php echo $receivable_quantity; ?>万円</td>
       </tr>
       <tr>
-        <th>売掛金の入金予定日</th>
+        <th>■売掛金の入金予定日:</th>
         <td><?php echo $receivable_date; ?> </td>
       </tr>
       <tr>
@@ -94,66 +94,66 @@ function entry_form_meta_box()
         <td><?php echo $receivable_notify; ?></td>
       </tr>
       <tr>
-        <th>売掛先の会社名</th>
+        <th>■売掛先の会社名:</th>
         <td><?php echo $receivable_company_name; ?></td>
       </tr>
       <tr>
-        <th>売掛先の所在地</th>
+        <th>■売掛先の所在地:</th>
         <td><?php echo $receivable_company_address; ?></td>
       </tr>
       <tr>
-        <th>取引年数</th>
+        <th>■取引年数:</th>
         <td><?php echo $receivable_company_year; ?></td>
       </tr>
       <tr>
-        <th>年間の取引金額</th>
+        <th>■年間の取引金額:</th>
         <td><?php echo $receivable_company_annual; ?></td>
       </tr>
     </table>
     <h2 class="entry-table-title">【ご利用者の情報】</h2>
     <table>
       <tr>
-        <th>会社名・事業者名</th>
+        <th>■会社名・事業者名:</th>
         <td><?php echo $info_company_name; ?></td>
       </tr>
       <tr>
-        <th>ファクタリングをご希望の時期</th>
+        <th>■ファクタリングをご希望の時期:</th>
         <td><?php echo $info_duration; ?></td>
       </tr>
       <tr>
-        <th>創業年数</th>
+        <th>■創業年数:</th>
         <td><?php echo $info_founding_year; ?></td>
       </tr>
       <tr>
-        <th>年商を選択</th>
+        <th>■年商を選択:</th>
         <td><?php echo $info_annual_turnover; ?></td>
       </tr>
       <tr>
-        <th>業種</th>
+        <th>■業種:</th>
         <td><?php echo $info_industry; ?></td>
       </tr>
       <tr>
-        <th>ご担当者の氏名</th>
+        <th>■ご担当者の氏名:</th>
         <td><?php echo $info_fullname; ?></td>
       </tr>
       <tr>
-        <th>ご担当者のフリガナ</th>
+        <th>■ご担当者のフリガナ:</th>
         <td><?php echo $info_furigana_name; ?></td>
       </tr>
       <tr>
-        <th>Email</th>
+        <th>■Email:</th>
         <td><?php echo $info_email; ?></td>
       </tr>
       <tr>
-        <th>電話番号</th>
+        <th>■電話番号:</th>
         <td><?php echo $info_phone; ?></td>
       </tr>
       <tr>
-        <th>ご希望の連絡日時</th>
+        <th>■ご希望の連絡日時:</th>
         <td><?php echo $info_preferred_contact_date; ?>（<?php echo $info_preferred_contact_type; ?>）</td>
       </tr>
       <tr>
-        <th>ご要望など</th>
+        <th>■ご要望など:</th>
         <td><?php echo $other; ?></td>
       </tr>
     </table>
