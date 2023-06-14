@@ -56,7 +56,7 @@ function admin_page()
           </th>
           <td>
             <label>
-              <input type="email" name="from_email" value="<?php echo $sfOption['from_email']; ?>" size="43" style="width:400px;height:36px;" required />
+              <input type="email" name="from_email" value="<?php echo $sfOption['from_email']; ?>" size="43" style="width:600px;height:36px;" required />
             </label>
           </td>
         </tr>
@@ -66,7 +66,7 @@ function admin_page()
           </th>
           <td>
             <label>
-              <input type="text" name="from_name" value="<?php echo $sfOption['from_name']; ?>" size="43" style="width:400px;height:36px;" required />
+              <input type="text" name="from_name" value="<?php echo $sfOption['from_name']; ?>" size="43" style="width:600px;height:36px;" required />
             </label>
           </td>
         </tr>
@@ -80,7 +80,7 @@ function admin_page()
           </th>
           <td>
             <label>
-              <input type="email" name="admin_to" value="<?php echo $sfOption['admin_to']; ?>" size="43" style="width:400px;height:36px;" required />
+              <input type="email" name="admin_to" value="<?php echo $sfOption['admin_to']; ?>" size="43" style="width:600px;height:36px;" required />
             </label>
           </td>
         </tr>
@@ -90,7 +90,7 @@ function admin_page()
           </th>
           <td>
             <label>
-              <input type="email" name="admin_bcc" value="<?php echo $sfOption['admin_bcc']; ?>" size="43" style="width:400px;height:36px;" required />
+              <input type="email" name="admin_bcc" value="<?php echo $sfOption['admin_bcc']; ?>" size="43" style="width:600px;height:36px;" required />
             </label>
           </td>
         </tr>
@@ -100,7 +100,7 @@ function admin_page()
           </th>
           <td>
             <label>
-              <input type="text" name="admin_subject" value="<?php echo $sfOption['admin_subject']; ?>" size="43" style="width:400px;height:36px;" required />
+              <input type="text" name="admin_subject" value="<?php echo $sfOption['admin_subject']; ?>" size="43" style="width:600px;height:36px;" required />
             </label>
           </td>
         </tr>
@@ -110,7 +110,7 @@ function admin_page()
           </th>
           <td>
             <label>
-              <input type="text" name="subadmin_subject" value="<?php echo $sfOption['subadmin_subject']; ?>" size="43" style="width:400px;height:36px;" required />
+              <input type="text" name="subadmin_subject" value="<?php echo $sfOption['subadmin_subject']; ?>" size="43" style="width:600px;height:36px;" required />
             </label>
           </td>
         </tr>
@@ -118,6 +118,7 @@ function admin_page()
           <th scope="row">
             通信メール内容
             <p style="font-weight:normal;">
+              お客様ナンバー:[entry_id]<br>
               あなたの事業形態を選択:[business_type]<br>
               所在地を選択:[location]<br>
               売掛先の事業形態:[business_form]<br>
@@ -141,13 +142,12 @@ function admin_page()
               ご担当者のフリガナ: [info_furigana_name]<br>
               Email: [info_email]<br>
               電話番号: [info_phone]<br>
-              ご希望の連絡日時: [info_preferred_contact_date]<br>
-              　　　　　　　　　[info_preferred_contact_type]<br>
+              ご希望の連絡日時: [info_preferred_contact_date][info_preferred_contact_type]<br>
               ご要望など: [other]
             </p>
           </th>
           <td>
-            <textarea type="text" name="admin_message" value="" cols="45" rows="30" style="width:400px;" required><?php echo $sfOption['admin_message']; ?></textarea>
+            <textarea type="text" name="admin_message" value="" cols="45" rows="30" style="width:600px;" required><?php echo $sfOption['admin_message']; ?></textarea>
           </td>
         </tr>
       </table>
@@ -159,7 +159,7 @@ function admin_page()
           </th>
           <td>
             <label>
-              <input type="text" name="customer_subject" value="<?php echo $sfOption['customer_subject']; ?>" size="43" style="width:400px;height:36px;" required />
+              <input type="text" name="customer_subject" value="<?php echo $sfOption['customer_subject']; ?>" size="43" style="width:600px;height:36px;" required />
             </label>
           </td>
         </tr>
@@ -167,6 +167,7 @@ function admin_page()
           <th scope="row">
             通信メール内容
             <p style="font-weight:normal;">
+              お客様ナンバー:[entry_id]<br>
               あなたの事業形態を選択:[business_type]<br>
               所在地を選択:[location]<br>
               売掛先の事業形態:[business_form]<br>
@@ -190,13 +191,12 @@ function admin_page()
               ご担当者のフリガナ: [info_furigana_name]<br>
               Email: [info_email]<br>
               電話番号: [info_phone]<br>
-              ご希望の連絡日時: [info_preferred_contact_date]<br>
-              　　　　　　　　　[info_preferred_contact_type]<br>
+              ご希望の連絡日時: [info_preferred_contact_date][info_preferred_contact_type]<br>
               ご要望など: [other]
             </p>
           </th>
           <td>
-            <textarea type="text" name="customer_message" value="" cols="45" rows="30" style="width:400px;" required><?php echo $sfOption['customer_message']; ?></textarea>
+            <textarea type="text" name="customer_message" value="" cols="45" rows="30" style="width:600px;" required><?php echo $sfOption['customer_message']; ?></textarea>
           </td>
         </tr>
       </table>

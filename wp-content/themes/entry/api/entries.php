@@ -16,7 +16,7 @@ function save_register_entry_form()
 {
 
 
-  $post_title = current_time("Y年n月j日 H:i:s") . " - " . get_post_data('receivable_company_name') . " - " . get_post_data('info_fullname') . " - " . get_post_data('info_phone');
+  $post_title = current_time("Y年n月j日 H:i:s") . " - "  . get_post_data('info_fullname') . " - " . get_post_data('info_phone');
 
   //Insert new post
   $new_post = wp_insert_post(array(
@@ -56,12 +56,14 @@ function save_register_entry_form()
   $customer_subject     =  $entry_form_options['customer_subject'];
   $customer_message     =  $entry_form_options['customer_message'];
   $customer_message  = replace_email_content($customer_message);
+  $customer_message  = preg_replace("/\[entry_id\]/", $entry_id, $customer_message);
 
   //send mail to admin
   $admin_email_to   =  $entry_form_options['admin_to'];
   $admin_subject     =  $entry_form_options['admin_subject'];
   $admin_message     =  $entry_form_options['admin_message'];
   $admin_message  = replace_email_content($admin_message);
+  $admin_message  = preg_replace("/\[entry_id\]/", $entry_id, $admin_message);
 
   wp_mail($customer_mail_to, $customer_subject, $customer_message, $headers);
 
@@ -131,19 +133,49 @@ if (!function_exists('get_post_data')) {
 }
 function replace_email_content($content)
 {
+  $fields = [
+    'business_type',
+    'location',
+    'business_form',
+    'experience',
+    'receivable_amount',
+    'receivable_quantity',
+    'receivable_date',
+    'receivable_notify',
+    'receivable_company_name',
+    'receivable_company_address',
+    'receivable_company_year',
+    'receivable_company_annual',
+    'info_company_name',
+    'info_duration',
+    'info_founding_year',
+    'info_annual_turnover',
+    'info_industry',
+    'info_fullname',
+    'info_furigana_name',
+    'info_email',
+    'info_phone',
+    'info_preferred_contact_date',
+    'info_preferred_contact_type',
+    'other',
+  ];
 
-  foreach ($_POST as $key => $value) {
+  foreach ($fields as $field) {
+    $value = isset($_POST[$field]) ? $_POST[$field] : "";
     if (is_array($value))
       $value = implode(",", $value);
-    if ($key == 'receivable_date') :
+    if ($field == 'receivable_date' && $value) :
       $date = date_create($value);
       $value =  date_format($date, "Y年m月d日");
     endif;
-    if ($key == 'info_preferred_contact_date') :
+    if ($field == 'info_preferred_contact_date' && $value) :
       $date = date_create($value);
       $value =  date_format($date, "Y年m月d日 H:i");
     endif;
-    $content  = preg_replace("/\[{$key}\]/", $value, $content);
+    if ($field == 'info_preferred_contact_type' && $value) :
+      $value = "（{$value}）";
+    endif;
+    $content  = preg_replace("/\[{$field}\]/", $value, $content);
   }
   return $content;
 }
@@ -164,7 +196,7 @@ function check_valid_entry_form_data(): bool
     'receivable_quantity',
     'receivable_date',
     'receivable_notify',
-    'receivable_company_name',
+    /* 'receivable_company_name', */
     'receivable_company_address',
     'receivable_company_year',
     'receivable_company_annual',
