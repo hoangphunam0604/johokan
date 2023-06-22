@@ -96,16 +96,16 @@ function entry_detail()
                       <td><?php echo $location; ?></td>
                     </tr>
                     <tr>
-                      <th>■売掛先の事業形態:</th>
-                      <td><?php echo $business_form; ?></td>
-                    </tr>
-                    <tr>
                       <th>■ファクタリングのご利用経験:</th>
                       <td><?php echo $experience; ?></td>
                     </tr>
                   </table>
                   <h2 class="entry-table-title">【売掛先の情報】</h2>
                   <table>
+                    <tr>
+                      <th>■売掛先の事業形態:</th>
+                      <td><?php echo $business_form; ?></td>
+                    </tr>
                     <tr>
                       <th>■対応可能な売掛債権額:</th>
                       <td><?php echo $receivable_amount; ?>万円</td>
