@@ -31,6 +31,7 @@ function save_register_entry_form()
   $entry_id = current_time("Ymd") . $new_post;
   update_post_meta($new_post, 'entry_id', $entry_id);
   $sub_emails = array();
+  $select_companies = array();
   $sub_ids = $_POST['companies'];
   $user_query = get_users(array('role' => 'sub-admin', 'include' =>  $sub_ids));
 
@@ -39,6 +40,8 @@ function save_register_entry_form()
       $email = get_the_author_meta('email', $user->ID);
       if ($email) {
         $sub_emails[]   = $email;
+        $company_name = get_the_author_meta("company_business_name", $user->ID);
+        $select_companies[] =  "■ {$company_name}";
       }
     }
   }
@@ -57,6 +60,12 @@ function save_register_entry_form()
   $customer_message     =  $entry_form_options['customer_message'];
   $customer_message  = replace_email_content($customer_message);
   $customer_message  = preg_replace("/\[entry_id\]/", $entry_id, $customer_message);
+  $companies = "";
+  if (!empty($select_companies)) {
+    $companies = implode("\n", $select_companies);
+  }
+
+  $customer_message  = preg_replace("/\[companies\]/", $companies, $customer_message);
 
   //send mail to admin
   $admin_email_to   =  $entry_form_options['admin_to'];
@@ -64,6 +73,9 @@ function save_register_entry_form()
   $admin_message     =  $entry_form_options['admin_message'];
   $admin_message  = replace_email_content($admin_message);
   $admin_message  = preg_replace("/\[entry_id\]/", $entry_id, $admin_message);
+
+  $company_number = count($select_companies);
+  $admin_message  = preg_replace("/\[company_number\]/", $company_number, $admin_message);
 
   wp_mail($customer_mail_to, $customer_subject, $customer_message, $headers);
 

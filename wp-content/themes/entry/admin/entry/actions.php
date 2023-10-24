@@ -1,5 +1,13 @@
 <?php
-
+add_action('admin_init', 'check_screen_edit_post');
+function check_screen_edit_post()
+{
+  global $pagenow;
+  if ($pagenow == 'post.php' && (isset($_GET['action']) && $_GET['action'] == 'edit')) {
+    wp_redirect(admin_url("/edit.php?post_type=entry&page=entry-detail&post=" . $_GET['post']));
+    exit;
+  }
+}
 //bỏ kiểm tra người edit
 add_filter('wp_check_post_lock_window', '__return_false');
 

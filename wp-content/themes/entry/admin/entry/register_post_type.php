@@ -38,7 +38,40 @@ function register_entry_post_type()
         "edit_published_posts"  =>  "edit_published_entries",
         "create_posts"  =>  "create_entries"
       ),
-      'register_meta_box_cb' => 'entry_form_meta_boxes',
     )
   );
+}
+
+
+// Thêm cột loại nội dung
+add_filter('manage_entry_posts_columns', 'custom_entry_columns');
+function custom_entry_columns($columns)
+{
+  $columns = [];
+  $columns['title'] = __('Title');
+  $columns['summary'] = __('物件概要');
+
+  return $columns;
+}
+
+
+// HIện thị loại nội dung trong bảng danh sách bài viết
+add_action('manage_entry_posts_custom_column', 'add_value_custom_entry_columns', 10, 2);
+function add_value_custom_entry_columns($column, $post_id)
+{
+  switch ($column) {
+    case 'summary':
+      $entry_id =  get_post_meta($post_id, 'entry_id', true);
+      $info_company_name =  get_post_meta($post_id, 'info_company_name', true);
+      $coms = [];
+      $coms[] = "ABC";
+      $coms[] = "XXX";
+      $com_name = implode("\n", $coms);
+      echo $com_name;
+?>
+      ■申込日時:<?php echo get_the_date('Y年m月d日', $post_id); ?><br>
+      ■お客様ナンバー: <?php echo $entry_id; ?><br>
+      ■会社名・事業者名: <?php echo $info_company_name; ?>
+<?php
+  }
 }

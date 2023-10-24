@@ -143,7 +143,8 @@ function admin_page()
               Email: [info_email]<br>
               電話番号: [info_phone]<br>
               ご希望の連絡日時: [info_preferred_contact_date][info_preferred_contact_type]<br>
-              ご要望など: [other]
+              ご要望など: [other]<br>
+              【査定希望を依頼した企業】: [company_number]
             </p>
           </th>
           <td>
@@ -192,7 +193,8 @@ function admin_page()
               Email: [info_email]<br>
               電話番号: [info_phone]<br>
               ご希望の連絡日時: [info_preferred_contact_date][info_preferred_contact_type]<br>
-              ご要望など: [other]
+              ご要望など: [other]<br>
+              【査定希望を依頼した企業】: [companies]
             </p>
           </th>
           <td>
