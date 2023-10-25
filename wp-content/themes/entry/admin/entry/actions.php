@@ -15,6 +15,7 @@ function remove_bulk_actions($actions, $post)
 {
 
   if ($post->post_type == "entry") :
+    return [];
     unset($actions['inline hide-if-no-js']);
     unset($actions['view']);
     $title            = _draft_or_post_title($post);
@@ -29,3 +30,8 @@ function remove_bulk_actions($actions, $post)
   return $actions;
 }
 add_filter('post_row_actions', 'remove_bulk_actions', 20, 2);
+
+if (!is_super_admin()) {
+  //Xóa hành động hàng loạt
+  add_filter('bulk_actions-edit-entry', '__return_false', 20);
+}

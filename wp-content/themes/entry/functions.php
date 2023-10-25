@@ -1,4 +1,17 @@
 <?php
+//Xóa link khôi phục mật khẩu
+//add_filter('lost_password_html_link', '__return_false');
+
+//Xóa link về trang chủ
+add_filter('login_site_html_link', '__return_false');
+//Xóa đổi language
+add_filter('login_display_language_dropdown', '__return_false');
+
+add_action('after_setup_theme', 'remove_admin_bar');
+function remove_admin_bar()
+{
+  show_admin_bar(false);
+}
 function autoloadLoad($dir = __DIR__)
 {
   $files = array_diff(scandir($dir, 1), array('..', '.'));

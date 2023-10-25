@@ -47,11 +47,14 @@ function register_entry_post_type()
 add_filter('manage_entry_posts_columns', 'custom_entry_columns');
 function custom_entry_columns($columns)
 {
-  $columns = [];
-  $columns['title'] = __('Title');
-  $columns['summary'] = __('物件概要');
+  $_columns = [];
+  if (is_super_admin()) {
+    $_columns['cb'] = $columns['cb'];
+  }
 
-  return $columns;
+  $_columns['entry_title'] = __('Title');
+
+  return $_columns;
 }
 
 
@@ -60,18 +63,15 @@ add_action('manage_entry_posts_custom_column', 'add_value_custom_entry_columns',
 function add_value_custom_entry_columns($column, $post_id)
 {
   switch ($column) {
-    case 'summary':
+    case 'entry_title':
+      $date = get_the_date('Y年m月d日', $post_id);
       $entry_id =  get_post_meta($post_id, 'entry_id', true);
       $info_company_name =  get_post_meta($post_id, 'info_company_name', true);
-      $coms = [];
-      $coms[] = "ABC";
-      $coms[] = "XXX";
-      $com_name = implode("\n", $coms);
-      echo $com_name;
-?>
-      ■申込日時:<?php echo get_the_date('Y年m月d日', $post_id); ?><br>
-      ■お客様ナンバー: <?php echo $entry_id; ?><br>
-      ■会社名・事業者名: <?php echo $info_company_name; ?>
-<?php
+      echo sprintf(
+        '<strong><a href="%s" >%s</a></strong>',
+        admin_url("/edit.php?post_type=entry&page=entry-detail&post=" . $post_id),
+        "{$date}-{$entry_id}-{$info_company_name}"
+      );
+      break;
   }
 }

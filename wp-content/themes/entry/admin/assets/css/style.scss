@@ -187,3 +187,18 @@
     height: 32px;
   }
 }
+.widefat td.column-entry_title {
+  font-size: 14px;
+}
+#wp-admin-bar-root-default {
+  display: none !important;
+}
+#wp-admin-bar-user-actions {
+  li {
+    margin-left: 16px !important;
+
+    &:not(#wp-admin-bar-logout):not(#wp-admin-bar-switch-back) {
+      display: none;
+    }
+  }
+}
