@@ -75,6 +75,9 @@ function save_register_entry_form()
   $admin_message  = preg_replace("/\[entry_id\]/", $entry_id, $admin_message);
 
   $company_number = count($select_companies);
+  $company_number = "{$company_number}社";
+  if ($company_number == 1)
+    $company_number = "御社のみ";
   $admin_message  = preg_replace("/\[company_number\]/", $company_number, $admin_message);
 
   wp_mail($customer_mail_to, $customer_subject, $customer_message, $headers);

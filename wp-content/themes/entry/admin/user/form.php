@@ -124,44 +124,46 @@ function custom_filter_sub_admin_role($user)
         margin-right: 0 !important;
       }
     </style>
-    <script type="text/javascript">
-      jQuery(function($) {
+    <?php if (current_user_can('administrator')) : ?>
+      <script type="text/javascript">
+        jQuery(function($) {
 
 
-        $("#your-profile input").on('keyup keypress', function(e) {
-          var keyCode = e.keyCode || e.which;
-          if (keyCode === 13) {
+          $("#your-profile input").on('keyup keypress', function(e) {
+            var keyCode = e.keyCode || e.which;
+            if (keyCode === 13) {
+              e.preventDefault();
+              return false;
+            }
+          });
+
+          $("#role").change(function() {
+            if ($(this).val() == "sub-admin") {
+              $("#sub-admin-filter").show();
+            } else {
+              $("#sub-admin-filter").hide();
+            }
+          })
+
+          $('body').on('click', '.company_logo_upload_image_button', function(e) {
             e.preventDefault();
-            return false;
-          }
-        });
+            aw_uploader = wp.media({
+                title: '会社ロゴ',
+                multiple: false
+              }).on('select', function() {
+                var attachment = aw_uploader.state().get('selection').first().toJSON();
+                $('#company-logo').val(attachment.url);
+                $('#company-logo').trigger('change');
+              })
+              .open();
+          });
+          $('#company-logo').on('change', function() {
+            $('#company-logo-preview img').attr('src', $(this).val());
+          });
 
-        $("#role").change(function() {
-          if ($(this).val() == "sub-admin") {
-            $("#sub-admin-filter").show();
-          } else {
-            $("#sub-admin-filter").hide();
-          }
         })
-
-        $('body').on('click', '.company_logo_upload_image_button', function(e) {
-          e.preventDefault();
-          aw_uploader = wp.media({
-              title: '会社ロゴ',
-              multiple: false
-            }).on('select', function() {
-              var attachment = aw_uploader.state().get('selection').first().toJSON();
-              $('#company-logo').val(attachment.url);
-              $('#company-logo').trigger('change');
-            })
-            .open();
-        });
-        $('#company-logo').on('change', function() {
-          $('#company-logo-preview img').attr('src', $(this).val());
-        });
-
-      })
-    </script>
+      </script>
+    <?php endif; ?>
     <div id="sub-admin-filter" style="display: <?php echo $display; ?>">
 
       <h2>＜不動産情報の登録項目＞</h2>
@@ -187,10 +189,12 @@ function custom_filter_sub_admin_role($user)
               <div id="company-logo-preview">
                 <img src="<?php echo $src; ?>" alt="" />
               </div>
-              <div class="company-logo-change">
-                <a href="#" class="company_logo_upload_image_button button button-secondary"><?php _e('Upload Image'); ?></a>
-              </div>
-              <input class="regular-text " type="url" id="company-logo" name="company_logo" value="<?php echo $src; ?>">
+              <?php if (current_user_can('administrator')) : ?>
+                <div class="company-logo-change">
+                  <a href="#" class="company_logo_upload_image_button button button-secondary"><?php _e('Upload Image'); ?></a>
+                </div>
+                <input class="regular-text " type="url" id="company-logo" name="company_logo" value="<?php echo $src; ?>">
+              <?php endif; ?>
             </div>
           </td>
         </tr>

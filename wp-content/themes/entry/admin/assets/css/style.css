@@ -194,4 +194,15 @@
 }
 #wp-admin-bar-user-actions li:not(#wp-admin-bar-logout):not(#wp-admin-bar-switch-back) {
   display: none;
+}
+
+.user-rich-editing-wrap,
+.user-syntax-highlighting-wrap,
+.user-admin-color-wrap,
+.user-comment-shortcuts-wrap,
+.show-admin-bar.user-admin-bar-front-wrap,
+.user-language-wrap,
+#screen-meta-links,
+#screen-meta {
+  display: none !important;
 }/*# sourceMappingURL=style.css.map */
