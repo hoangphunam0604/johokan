@@ -26,9 +26,20 @@ function save_register_entry_form()
   ));
   if (!$new_post)
     return false;
+  $count_query = new WP_Query([
+    'post_type' => 'entry',
+    'date_query' => array(
+      array(
+        'year' => date('Y'),
+        'month' => date('m'),
+        'day' => date('d'),
+      ),
+    ),
+  ]);
+  $count = str_pad($count_query->found_posts, 2, '0', STR_PAD_LEFT);
 
   update_entry_data($new_post);
-  $entry_id = current_time("Ymd") . $new_post;
+  $entry_id = current_time("ymd") . $count;
   update_post_meta($new_post, 'entry_id', $entry_id);
   $sub_emails = array();
   $select_companies = array();

@@ -127,7 +127,7 @@ function admin_page()
               売掛債権の金額: [receivable_amount]万円<br>
               ご希望の買取金額: [receivable_quantity]万円<br>
               売掛金の入金予定日: [receivable_date]<br>
-              売掛先への債権譲渡通知は可能ですか？: [receivable_notify]<br>
+              売掛先への通知は可能ですか？: [receivable_notify]<br>
               売掛先の会社名: [receivable_company_name]<br>
               売掛先の所在地: [receivable_company_address]<br>
               取引年数: [receivable_company_year]<br>
@@ -177,7 +177,7 @@ function admin_page()
               売掛債権の金額: [receivable_amount]万円<br>
               ご希望の買取金額: [receivable_quantity]万円<br>
               売掛金の入金予定日: [receivable_date]<br>
-              売掛先への債権譲渡通知は可能ですか？: [receivable_notify]<br>
+              売掛先への通知は可能ですか？: [receivable_notify]<br>
               売掛先の会社名: [receivable_company_name]<br>
               売掛先の所在地: [receivable_company_address]<br>
               取引年数: [receivable_company_year]<br>

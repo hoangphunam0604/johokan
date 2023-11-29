@@ -15,6 +15,7 @@ function save_custom_user_profile_fields($user_id)
   update_user_meta($user_id, 'company_logo',  $_POST['company_logo']);
   update_user_meta($user_id, 'company_business_name',  $_POST['company_business_name']);
   update_user_meta($user_id, 'company_description',  $_POST['company_description']);
+  update_user_meta($user_id, 'company_detail_url',  $_POST['company_detail_url']);
 
   $rules = [];
   $_rules = $_POST['rules'];

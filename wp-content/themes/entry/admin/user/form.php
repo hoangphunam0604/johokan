@@ -210,6 +210,12 @@ function custom_filter_sub_admin_role($user)
             <textarea class="regular-text " rows="4" id="company-description" name="company_description"><?php echo get_the_author_meta("company_description", $user->ID); ?></textarea>
           </td>
         </tr>
+        <tr>
+          <th>URL</th>
+          <td>
+            <input class="regular-text " type="text" id="company-detail_url" name="company_detail_url" value="<?php echo get_the_author_meta("company_detail_url", $user->ID); ?>">
+          </td>
+        </tr>
       </table>
 
       <hr>
