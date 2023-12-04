@@ -128,6 +128,9 @@ function custom_filter_sub_admin_role($user)
       <script type="text/javascript">
         jQuery(function($) {
 
+          $(".user-first-name-wrap th").text('担当者名');
+          $(".user-last-name-wrap th").text('会社名');
+          $(".user-display-name-wrap th").text('表示名');
 
           $("#your-profile input").on('keyup keypress', function(e) {
             var keyCode = e.keyCode || e.which;
@@ -199,7 +202,7 @@ function custom_filter_sub_admin_role($user)
           </td>
         </tr>
         <tr>
-          <th>会社名</th>
+          <th>会社名表示</th>
           <td>
             <input class="regular-text " type="text" id="company-business-name" name="company_business_name" value="<?php echo get_the_author_meta("company_business_name", $user->ID); ?>">
           </td>
@@ -247,6 +250,7 @@ function custom_filter_sub_admin_role($user)
     </div>
     <script>
       jQuery(function($) {
+
         const loading = $(`<div class="lds-facebook"><div></div><div></div><div></div></div>`);
         const rules = $("#rules");
         let key = <?php echo $keyRule; ?>;
