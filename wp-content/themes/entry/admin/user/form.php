@@ -214,9 +214,22 @@ function custom_filter_sub_admin_role($user)
           </td>
         </tr>
         <tr>
-          <th>URL</th>
+          <th>リンクURL</th>
           <td>
             <input class="regular-text " type="text" id="company-detail_url" name="company_detail_url" value="<?php echo get_the_author_meta("company_detail_url", $user->ID); ?>">
+          </td>
+        </tr>
+        <tr>
+          <th>リンクURLの表示/非表示</th>
+          <td>
+            <?php
+            $company_show_detail_url = get_the_author_meta("company_show_detail_url", $user->ID);
+            ?>
+            <label class="switch-button r">
+              <input type="checkbox" class="checkbox" name="company_show_detail_url" <?php echo $company_show_detail_url == 1 ? "checked" : ""; ?> />
+              <div class="knobs"></div>
+              <div class="layer"></div>
+            </label>
           </td>
         </tr>
       </table>

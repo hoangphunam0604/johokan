@@ -17,6 +17,9 @@ function save_custom_user_profile_fields($user_id)
   update_user_meta($user_id, 'company_description',  $_POST['company_description']);
   update_user_meta($user_id, 'company_detail_url',  $_POST['company_detail_url']);
 
+  $company_show_detail_url = isset($_POST['company_show_detail_url']) && $_POST['company_show_detail_url'] == "on" ? 1 : 0;
+  update_user_meta($user_id, 'company_show_detail_url',  $company_show_detail_url);
+
   $rules = [];
   $_rules = $_POST['rules'];
   if (is_array($_rules) && !empty($_rules)) :

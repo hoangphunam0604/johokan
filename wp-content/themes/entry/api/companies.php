@@ -79,7 +79,8 @@ function get_company($user_ID)
     'logo'  => $src,
     'name'  => get_the_author_meta('company_business_name', $user_ID),
     'description'  => nl2br(get_the_author_meta('company_description', $user_ID)),
-    'detail_url'  => get_the_author_meta('company_detail_url', $user_ID)
+    'detail_url'  => get_the_author_meta('company_detail_url', $user_ID),
+    'show_detail_url'  => !!get_the_author_meta('company_show_detail_url', $user_ID)
   ];
 }
 /* 
