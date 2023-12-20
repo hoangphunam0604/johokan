@@ -205,4 +205,11 @@
 #screen-meta-links,
 #screen-meta {
   display: none !important;
+}
+
+img.company_logo {
+  -o-object-fit: contain;
+     object-fit: contain;
+  background: #fff;
+  border: 1px solid #f3f3f3;
 }/*# sourceMappingURL=style.css.map */

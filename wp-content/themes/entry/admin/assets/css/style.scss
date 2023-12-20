@@ -212,3 +212,9 @@
 #screen-meta {
   display: none !important;
 }
+
+img.company_logo {
+  object-fit: contain;
+  background: #fff;
+  border: 1px solid #f3f3f3;
+}
