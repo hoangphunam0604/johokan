@@ -177,11 +177,15 @@ function custom_filter_sub_admin_role($user)
             <?php
             $company_priority = get_the_author_meta("company_priority", $user->ID);
             ?>
-            <label class="switch-button r">
-              <input type="checkbox" class="checkbox" name="company_priority" <?php echo $company_priority == 1 ? "checked" : ""; ?> />
-              <div class="knobs"></div>
-              <div class="layer"></div>
-            </label>
+            <?php if (current_user_can('administrator')) : ?>
+              <label class="switch-button r">
+                <input type="checkbox" class="checkbox" name="company_priority" <?php echo $company_priority == 1 ? "checked" : ""; ?> />
+                <div class="knobs"></div>
+                <div class="layer"></div>
+              </label>
+            <?php else : ?>
+              <strong><?php echo $company_priority == 1 ? "有効" : "無効"; ?></strong>
+            <?php endif; ?>
           </td>
         </tr>
         <tr>
@@ -225,11 +229,17 @@ function custom_filter_sub_admin_role($user)
             <?php
             $company_show_detail_url = get_the_author_meta("company_show_detail_url", $user->ID);
             ?>
-            <label class="switch-button r">
-              <input type="checkbox" class="checkbox" name="company_show_detail_url" <?php echo $company_show_detail_url == 1 ? "checked" : ""; ?> />
-              <div class="knobs"></div>
-              <div class="layer"></div>
-            </label>
+            <?php if (current_user_can('administrator')) : ?>
+              <label class="switch-button r">
+                <input type="checkbox" class="checkbox" name="company_show_detail_url" <?php echo $company_show_detail_url == 1 ? "checked" : ""; ?> />
+                <div class="knobs"></div>
+                <div class="layer"></div>
+              </label>
+            <?php else : ?>
+              <strong><?php echo $company_show_detail_url == 1 ? "有効" : "無効"; ?></strong>
+            <?php endif; ?>
+
+
           </td>
         </tr>
       </table>

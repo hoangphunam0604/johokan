@@ -212,4 +212,15 @@ img.company_logo {
      object-fit: contain;
   background: #fff;
   border: 1px solid #f3f3f3;
+}
+
+.sub_admin .user-description-wrap .description,
+.sub_admin .user-email-wrap .description,
+.sub_admin .user-user-login-wrap .description {
+  display: none;
+}
+
+#footer-upgrade,
+#footer-thankyou {
+  display: none;
 }/*# sourceMappingURL=style.css.map */

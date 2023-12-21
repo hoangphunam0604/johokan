@@ -218,3 +218,16 @@ img.company_logo {
   background: #fff;
   border: 1px solid #f3f3f3;
 }
+.sub_admin {
+  .user-description-wrap,
+  .user-email-wrap,
+  .user-user-login-wrap {
+    .description {
+      display: none;
+    }
+  }
+}
+#footer-upgrade,
+#footer-thankyou {
+  display: none;
+}
