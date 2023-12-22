@@ -1,3 +1,4 @@
+@charset "UTF-8";
 .switch-button {
   display: block;
   position: relative;
@@ -223,4 +224,142 @@ img.company_logo {
 #footer-upgrade,
 #footer-thankyou {
   display: none;
+}
+
+#login {
+  width: 500px;
+  max-width: 100%;
+  padding-left: 15px;
+  padding-right: 15px;
+}
+#login h1:after {
+  content: "一括査定システム\aログイン画面";
+  white-space: pre;
+  font-size: 22px;
+  display: block;
+}
+#login h1 a,
+#login h1 a {
+  background-image: url(https://mumbai-central.com/wp-content/uploads/2018/06/logo_fa.png);
+  height: 65px;
+  width: 320px;
+  background-size: 320px 65px;
+  background-repeat: no-repeat;
+  padding-bottom: 30px;
+}
+#login .message {
+  border-left: none;
+  box-shadow: none;
+  text-align: center;
+}
+#login form {
+  background: none;
+  border: none;
+  box-shadow: none;
+  box-sizing: border-box;
+  padding: 3px;
+  margin-bottom: 20px;
+}
+#login form .user-pass-wrap,
+#login form p:first-child {
+  margin-bottom: 20px;
+}
+#login form .user-pass-wrap input,
+#login form p:first-child input {
+  padding: 8px 15px;
+  box-sizing: border-box;
+}
+#login form .user-pass-wrap label,
+#login form p:first-child label {
+  font-size: 16px;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+#login form .user-pass-wrap .button.wp-hide-pw,
+#login form p:first-child .button.wp-hide-pw {
+  min-height: 48px;
+}
+#login form .forgetmenot {
+  text-align: center;
+  float: none;
+  margin-bottom: 15px;
+}
+#login form .button-primary {
+  float: none;
+  width: 100%;
+  padding: 5px 15px;
+  font-size: 18px;
+  background-color: #da6e02;
+  border-color: #da6e02;
+  font-weight: bold;
+  transition: 0.3s;
+}
+#login form .button-primary:hover {
+  background-color: #e07b16;
+  border-color: #e07b16;
+  filter: drop-shadow(0 0 5px #e07b16);
+}
+#login #loginform .user-pass-wrap,
+#login #loginform p:first-child {
+  position: relative;
+  border-radius: 5px;
+  overflow: hidden;
+  border: 1px solid #ccc;
+}
+#login #loginform .user-pass-wrap label,
+#login #loginform .user-pass-wrap input,
+#login #loginform p:first-child label,
+#login #loginform p:first-child input {
+  margin-bottom: 0;
+}
+#login #loginform .user-pass-wrap input,
+#login #loginform p:first-child input {
+  border: none;
+  padding-left: 130px;
+}
+#login #loginform .user-pass-wrap label,
+#login #loginform p:first-child label {
+  border-radius: 5px 0 0 5px;
+  position: absolute;
+  background-color: #f3f3f3;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  margin-bottom: 0;
+  display: inline-block;
+  line-height: 100%;
+  display: flex;
+  align-items: center;
+  padding: 10px;
+  width: 100px;
+  z-index: 3;
+}
+#login #lostpasswordform {
+  text-align: center;
+}
+#login #lostpasswordform p label {
+  display: block;
+}
+#login #lostpasswordform p input {
+  text-align: center;
+}
+
+body.login {
+  background-color: #fff;
+}
+body.login #nav {
+  margin-top: 0;
+  padding: 0;
+  text-align: center;
+}
+
+body.login-action-lostpassword #login h1:after {
+  content: "一括査定システム\aパスワードリセット手続き";
+}
+
+#wp-auth-check-wrap #wp-auth-check {
+  width: 700px;
+  max-width: 100%;
+  margin: 0;
+  transform: translateX(-50%);
 }/*# sourceMappingURL=style.css.map */

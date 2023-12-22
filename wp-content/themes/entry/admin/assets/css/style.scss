@@ -231,3 +231,141 @@ img.company_logo {
 #footer-thankyou {
   display: none;
 }
+#login {
+  width: 500px;
+  max-width: 100%;
+  padding-left: 15px;
+  padding-right: 15px;
+  h1:after {
+    content: "一括査定システム\a ログイン画面";
+    white-space: pre;
+    font-size: 22px;
+    display: block;
+  }
+  h1 a,
+  h1 a {
+    background-image: url(https://mumbai-central.com/wp-content/uploads/2018/06/logo_fa.png);
+    height: 65px;
+    width: 320px;
+    background-size: 320px 65px;
+    background-repeat: no-repeat;
+    padding-bottom: 30px;
+  }
+  .message {
+    border-left: none;
+    box-shadow: none;
+    text-align: center;
+  }
+  form {
+    background: none;
+    border: none;
+    box-shadow: none;
+    box-sizing: border-box;
+    padding: 3px;
+    margin-bottom: 20px;
+    .user-pass-wrap,
+    p:first-child {
+      margin-bottom: 20px;
+
+      input {
+        padding: 8px 15px;
+        box-sizing: border-box;
+      }
+      label {
+        font-size: 16px;
+        font-weight: bold;
+        margin-bottom: 10px;
+      }
+      .button.wp-hide-pw {
+        min-height: 48px;
+      }
+    }
+    .forgetmenot {
+      text-align: center;
+      float: none;
+      margin-bottom: 15px;
+    }
+    .submit {
+    }
+    .button-primary {
+      float: none;
+      width: 100%;
+      padding: 5px 15px;
+      font-size: 18px;
+      background-color: #da6e02;
+      border-color: #da6e02;
+      font-weight: bold;
+      transition: 0.3s;
+      &:hover {
+        background-color: #e07b16;
+        border-color: #e07b16;
+        filter: drop-shadow(0 0 5px #e07b16);
+      }
+    }
+  }
+  #loginform {
+    .user-pass-wrap,
+    p:first-child {
+      position: relative;
+      border-radius: 5px;
+      overflow: hidden;
+      border: 1px solid #ccc;
+      label,
+      input {
+        margin-bottom: 0;
+      }
+      input {
+        border: none;
+        padding-left: 130px;
+      }
+      label {
+        border-radius: 5px 0 0 5px;
+        position: absolute;
+        background-color: #f3f3f3;
+        top: 0;
+        left: 0;
+        bottom: 0;
+        margin-bottom: 0;
+        display: inline-block;
+        line-height: 100%;
+        display: flex;
+        align-items: center;
+        padding: 10px;
+        width: 100px;
+        z-index: +3;
+      }
+    }
+  }
+  #lostpasswordform {
+    text-align: center;
+    p {
+      label {
+        display: block;
+      }
+      input {
+        text-align: center;
+      }
+    }
+  }
+}
+body.login {
+  background-color: #fff;
+  #nav {
+    margin-top: 0;
+    padding: 0;
+    text-align: center;
+  }
+}
+body.login-action-lostpassword {
+  #login {
+    h1:after {
+      content: "一括査定システム\a パスワードリセット手続き";
+    }
+  }
+}
+#wp-auth-check-wrap #wp-auth-check {
+  width: 700px;
+  max-width: 100%;
+  margin: 0;
+  transform: translateX(-50%);
+}
