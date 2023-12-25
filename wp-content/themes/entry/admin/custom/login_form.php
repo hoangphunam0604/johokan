@@ -9,5 +9,12 @@ add_action('login_enqueue_scripts', 'my_login_logo');
 add_filter('login_headertext', 'custom_login_headertext');
 function custom_login_headertext()
 {
-  return "一括査定システム ログイン画面";
+  $logo_image = get_stylesheet_directory_uri() . "/assets/img/logo_fa.png";
+  return "<img src=\"{$logo_image}\"  alt=\"一括査定システム ログイン画面\">";
+}
+
+add_filter('login_headerurl', 'custom_login_headerurl');
+function custom_login_headerurl()
+{
+  return wp_login_url();
 }

@@ -240,12 +240,14 @@ img.company_logo {
 }
 #login h1 a,
 #login h1 a {
-  background-image: url(https://mumbai-central.com/wp-content/uploads/2018/06/logo_fa.png);
-  height: 65px;
-  width: 320px;
-  background-size: 320px 65px;
-  background-repeat: no-repeat;
-  padding-bottom: 30px;
+  background: none !important;
+  text-indent: inherit;
+  margin-left: auto;
+  margin-right: auto;
+  margin-bottom: 55px;
+  width: -moz-fit-content;
+  width: fit-content;
+  height: auto;
 }
 #login .message {
   border-left: none;
