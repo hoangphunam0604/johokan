@@ -24,6 +24,10 @@ function get_companies_by_rules($priority)
       [
         "key" =>  "company_priority",
         "value" =>  $priority
+      ],
+      [
+        "key" =>  "company_active",
+        "value" =>  true
       ]
     ]
   ]);

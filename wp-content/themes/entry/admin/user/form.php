@@ -67,8 +67,7 @@ function custom_filter_sub_admin_role($user)
   if (current_user_can('sub-admin') || current_user_can('administrator')) {
     global $locations;
 
-
-    $roles = (array) $user->roles;
+    $roles = (array) ($user != 'add-new-user' ? $user->roles : []);
     $display = in_array("sub-admin", $roles) ? "block" : "none";
 
   ?>
@@ -172,10 +171,27 @@ function custom_filter_sub_admin_role($user)
       <h2>＜不動産情報の登録項目＞</h2>
       <table class="form-table">
         <tr>
+          <th>絞り込みで表示</th>
+          <td>
+            <?php
+            $company_active = $user != 'add-new-user' ? get_the_author_meta("company_active", $user->ID) : 0;
+            ?>
+            <?php if (current_user_can('administrator')) : ?>
+              <label class="switch-button r">
+                <input type="checkbox" class="checkbox" name="company_active" <?php echo $company_active == 1 ? "checked" : ""; ?> />
+                <div class="knobs"></div>
+                <div class="layer"></div>
+              </label>
+            <?php else : ?>
+              <strong><?php echo $company_active == 1 ? "有効" : "無効"; ?></strong>
+            <?php endif; ?>
+          </td>
+        </tr>
+        <tr>
           <th>優先させる業者（有料版）</th>
           <td>
             <?php
-            $company_priority = get_the_author_meta("company_priority", $user->ID);
+            $company_priority = $user != 'add-new-user' ? get_the_author_meta("company_priority", $user->ID) : 0;
             ?>
             <?php if (current_user_can('administrator')) : ?>
               <label class="switch-button r">
@@ -191,7 +207,7 @@ function custom_filter_sub_admin_role($user)
         <tr>
           <th>会社ロゴ</th>
           <td>
-            <?php $src =  get_the_author_meta('company_logo', $user->ID) ?: get_stylesheet_directory_uri() . '/assets/img/default-logo.png'; ?>
+            <?php $src =  $user != 'add-new-user' ? get_the_author_meta('company_logo', $user->ID) : get_stylesheet_directory_uri() . '/assets/img/default-logo.png'; ?>
             <div class="company-logo">
               <div id="company-logo-preview">
                 <img src="<?php echo $src; ?>" alt="" />
@@ -208,26 +224,26 @@ function custom_filter_sub_admin_role($user)
         <tr>
           <th>会社名表示</th>
           <td>
-            <input class="regular-text " type="text" id="company-business-name" name="company_business_name" value="<?php echo get_the_author_meta("company_business_name", $user->ID); ?>">
+            <input class="regular-text " type="text" id="company-business-name" name="company_business_name" value="<?php echo  $user != 'add-new-user' ? get_the_author_meta("company_business_name", $user->ID) : ""; ?>">
           </td>
         </tr>
         <tr>
           <th>説明文</th>
           <td>
-            <textarea class="regular-text " rows="4" id="company-description" name="company_description"><?php echo get_the_author_meta("company_description", $user->ID); ?></textarea>
+            <textarea class="regular-text " rows="4" id="company-description" name="company_description"><?php echo $user != "add-new-user" ?  get_the_author_meta("company_description", $user->ID) : ""; ?></textarea>
           </td>
         </tr>
         <tr>
           <th>リンクURL</th>
           <td>
-            <input class="regular-text " type="text" id="company-detail_url" name="company_detail_url" value="<?php echo get_the_author_meta("company_detail_url", $user->ID); ?>">
+            <input class="regular-text " type="text" id="company-detail_url" name="company_detail_url" value="<?php echo  $user != "add-new-user" ? get_the_author_meta("company_detail_url", $user->ID) : ""; ?>">
           </td>
         </tr>
         <tr>
           <th>リンクURLの表示/非表示</th>
           <td>
             <?php
-            $company_show_detail_url = get_the_author_meta("company_show_detail_url", $user->ID);
+            $company_show_detail_url =  $user != "add-new-user" ? get_the_author_meta("company_show_detail_url", $user->ID) : "";
             ?>
             <?php if (current_user_can('administrator')) : ?>
               <label class="switch-button r">

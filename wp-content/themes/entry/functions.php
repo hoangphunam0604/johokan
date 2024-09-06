@@ -1,4 +1,6 @@
 <?php
+add_filter('admin_email_check_interval', '__return_false');
+
 //Xóa link khôi phục mật khẩu
 //add_filter('lost_password_html_link', '__return_false');
 

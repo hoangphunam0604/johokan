@@ -9,9 +9,10 @@ function save_custom_user_profile_fields($user_id)
 
   if ($_POST["role"] !== "sub-admin")
     return;
+  $company_active = isset($_POST['company_active']) && $_POST['company_active'] == "on" ? 1 : 0;
   $company_priority = isset($_POST['company_priority']) && $_POST['company_priority'] == "on" ? 1 : 0;
+  update_user_meta($user_id, 'company_active',  $company_active);
   update_user_meta($user_id, 'company_priority',  $company_priority);
-  update_user_meta($user_id, 'company_logo',  $_POST['company_priority']);
   update_user_meta($user_id, 'company_logo',  $_POST['company_logo']);
   update_user_meta($user_id, 'company_business_name',  $_POST['company_business_name']);
   update_user_meta($user_id, 'company_description',  $_POST['company_description']);
@@ -45,4 +46,24 @@ function save_custom_user_profile_fields($user_id)
     endforeach;
   endif;
   update_user_meta($user_id, 'rules', $rules);
+}
+
+
+
+add_action('wp_ajax_change_company_active', 'change_company_active');
+add_action('wp_ajax_nopriv_change_company_active', 'change_company_active');
+
+function change_company_active()
+{
+  if ($_SERVER['REQUEST_METHOD'] != 'POST')
+    return_json(['status' => false, 'msg' => 'Method not allow']);
+  $user_id = $_POST['user_id'];
+  $company_active = filter_var($_POST['company_active'], FILTER_VALIDATE_BOOLEAN);
+  update_user_meta($user_id, 'company_active',  $company_active);
+  return_json(['status' => true, 'company_active'  =>  $company_active]);
+}
+
+function return_json(array $data): void
+{
+  exit(json_encode($data));
 }
