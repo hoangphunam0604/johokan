@@ -354,6 +354,19 @@ body.login #nav {
   padding: 0;
   text-align: center;
 }
+body.login .admin-email-confirm-form .admin-email__heading {
+  text-align: center;
+}
+body.login .admin-email-confirm-form .admin-email__actions-primary {
+  display: flex;
+  align-items: center;
+}
+body.login .admin-email-confirm-form .admin-email__actions-primary .button {
+  padding: 5px 15px;
+  font-size: 18px;
+  font-weight: bold;
+  transition: 0.3s;
+}
 
 body.login-action-lostpassword #login h1:after {
   content: "一括査定システム\aパスワードリセット手続き";
