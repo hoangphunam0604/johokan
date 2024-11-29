@@ -7,7 +7,9 @@ function johokan_entry_router()
   if ($_SERVER['REQUEST_METHOD'] !== "POST") :
     global $pagenow;
     if (!is_user_logged_in() && !is_admin() && $pagenow != 'wp-login.php') {
-      wp_redirect(wp_login_url());
+      require_once __DIR__ . "/../404.php";
+      status_header(404, 'Page Not Found');
+      //wp_redirect(wp_login_url(), 301);
       exit;
     }
     return;

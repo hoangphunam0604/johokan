@@ -1,6 +1,6 @@
 <?php
 if (!isset($_GET['test'])) :
-  wp_redirect(admin_url('/edit.php?post_type=entry'));
+  wp_redirect(admin_url('/edit.php?post_type=entry'), 301);
   exit;
 endif;
 global $locations; ?>
